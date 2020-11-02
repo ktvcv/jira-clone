@@ -1,64 +1,71 @@
 -- creation of enumeration
-create type participant_roles as enum ('dep_manager', 'scrum_master', 'regular_participant');
+create type participant_roles as enum ('scrum_master', 'regular_participant');
 
 create type affiliation as enum ('assigned_to_me', 'created_by_me', 'reviewer_by_me');
 
-create type task_status as enum ('created', 'approved', 'on-going', 'finished');
+create type task_status as enum ('todo', 'on_going', 'finished');
+
+create type task_status_approval as enum ('approved', 'to_be_approved');
+
+--идея такова, что любой участник проекта предлагает свою идею, если это фича,  то ее должен
+-- подтвердить скрам мастер, если баг, то она сразу подтвержена, и к ней могут добавится или быть добавлены
+-- участники. Все неподтвержденные таски хранятся в бэклоге, и потом с м назначает им спринт и тд
+create type task_status_type as enum ('feature', 'bug');
 ----------------------------------------------
 
 -- creation of tables and sequence
 create table if not exists project(id serial primary key,
-                                   title varchar(100) not null);
+                                   title varchar(100) not null,
+                                   owner_id int not null );
+
 create sequence if not exists seq_proj start 1;
 
-create table if not exists department(id serial primary key,
-                                      type varchar(100) not null);
-create sequence if not exists seq_dep start 1;
+-- мне кажется, лучше убрать отдел, лучше сделать один раздел(разработка) и чтобы все были привязаны только
+-- к проекту
+-- create table if not exists department(id serial primary key,
+-- type varchar(100) not null);
+-- create sequence if not exists seq_dep start 1;
 
-create table if not exists back_log(id serial primary key );
+create table if not exists back_log(id serial primary key,
+                                    project_id int not null );
 create sequence if not exists backlog_dep start 1;
+
 
 create table if not exists sprint(id serial primary key,
                                   dateOfBeginning date not null,
-                                  duration int);
+                                  duration int,
+                                  project_id int not null );
 create sequence if not exists seq_sprint start 1;
 
 create table if not exists task(id serial primary key,
                                 title varchar(100) not null,
                                 start_date date not null,
-                                estimated_finish_date date not null,
-                                status task_status not null);
+                                description varchar(500),
+                                duration int,
+                                status task_status not null,
+                                status_apr task_status_approval not null,
+                                status_type task_status_type not null,
+                                backlog_id int not null ,
+                                sprint_id int ,
+                                extra_info_id int ,
+                                creator_id int not null ,
+                                priority int check ( priority > 0));
+
 create sequence if not exists seq_task start 1;
 
 create table if not exists usr(id serial primary key,
-                               name varchar(50),
+                               name varchar(50) not null ,
                                email varchar(50) not null ,
                                password varchar(50) not null);
 create sequence if not exists seq_participant start 1;
 ---------------------------------------------
-
-alter table project add column owner_id int references usr (id) on delete restrict ;
-
-alter table department add column project_id int references project (id) on delete cascade ,
-                       add column head_id int references usr (id) on delete set null ;
-
-alter table back_log add column project_id int references project (id) on delete cascade ;
-
 create table if not exists extra_task_info(id serial primary key,
                                            file bytea not null );
 create sequence if not exists seq_task_extra start 1;
 
-alter table task add column backlog_id int references back_log (id) on delete cascade ,
-                 add column sprint_id int references sprint (id) on delete no action ,
-                 add column extra_info_id int references extra_task_info (id) on delete no action ,
-                 add column priority int check ( priority > 0);
-
-
-alter table sprint add column scrum_master_id int references usr (id) on delete set null ;
-
 -- Creation of many-to-many between users and tasks
 create table user_has_tasks(
-                               task_id int references task (id) on delete cascade ,
+                               task_id int references task (id) on delete cascade on update cascade ,
                                participant_id int references usr (id) on delete cascade ,
                                affiliation affiliation not null );
 
@@ -67,3 +74,4 @@ create table project_has_participants(
                                          project_id int references project(id) on delete cascade ,
                                          participant_id int references usr(id) on delete cascade ,
                                          role participant_roles not null );
+
