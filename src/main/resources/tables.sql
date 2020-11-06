@@ -1,11 +1,11 @@
 -- creation of enumeration
-create type participant_roles as enum ('scrum_master', 'regular_participant');
-
-create type affiliation as enum ('assigned_to_me', 'created_by_me', 'reviewer_by_me');
-
-create type task_status as enum ('todo', 'on_going', 'finished');
-
-create type task_status_approval as enum ('approved', 'to_be_approved');
+-- create type participant_roles as enum ('scrum_master', 'regular_participant');
+--
+-- create type affiliation as enum ('assigned_to_me', 'created_by_me', 'reviewer_by_me');
+--
+-- create type task_status as enum ('todo', 'on_going', 'finished');
+--
+-- create type task_status_approval as enum ('approved', 'to_be_approved');
 
 --идея такова, что любой участник проекта предлагает свою идею, если это фича,  то ее должен
 -- подтвердить скрам мастер, если баг, то она сразу подтвержена, и к ней могут добавится или быть добавлены
@@ -16,7 +16,8 @@ create type task_status_type as enum ('feature', 'bug');
 -- creation of tables and sequence
 create table if not exists project(id serial primary key,
                                    title varchar(100) not null,
-                                   owner_id int not null );
+                                   owner_id int not null,
+                                   creation_date date not null default current_date);
 
 create sequence if not exists seq_proj start 1;
 
@@ -27,24 +28,26 @@ create sequence if not exists seq_proj start 1;
 -- create sequence if not exists seq_dep start 1;
 
 create table if not exists back_log(id serial primary key,
-                                    project_id int not null );
+                                    project_id int not null,
+                                    creation_date date not null default current_date);
 create sequence if not exists backlog_dep start 1;
 
 
 create table if not exists sprint(id serial primary key,
-                                  dateOfBeginning date not null,
+                                  creation_date date not null default current_date,
+                                  date_of_beginning date,
                                   duration int,
                                   project_id int not null );
 create sequence if not exists seq_sprint start 1;
 
 create table if not exists task(id serial primary key,
                                 title varchar(100) not null,
-                                start_date date not null,
+                                creation_date date not null default current_date,
                                 description varchar(500),
                                 duration int,
-                                status task_status not null,
-                                status_apr task_status_approval not null,
-                                status_type task_status_type not null,
+                                status_work varchar(20) not null,
+                                status_apr varchar(20) not null,
+                                status_type varchar(20) not null,
                                 backlog_id int not null ,
                                 sprint_id int ,
                                 extra_info_id int ,
@@ -56,22 +59,34 @@ create sequence if not exists seq_task start 1;
 create table if not exists usr(id serial primary key,
                                name varchar(50) not null ,
                                email varchar(50) not null ,
-                               password varchar(50) not null);
-create sequence if not exists seq_participant start 1;
+                               password varchar(50) not null,
+                               creation_date date not null default current_date);
+create sequence if not exists seq_client start 1;
 ---------------------------------------------
 create table if not exists extra_task_info(id serial primary key,
-                                           file bytea not null );
+                                           file bytea not null,
+                                           creation_date date not null default current_date);
 create sequence if not exists seq_task_extra start 1;
 
 -- Creation of many-to-many between users and tasks
 create table user_has_tasks(
                                task_id int references task (id) on delete cascade on update cascade ,
                                participant_id int references usr (id) on delete cascade ,
-                               affiliation affiliation not null );
+                               affiliation varchar(20) not null );
 
 -- Creation of many-to-many between users and projects
 create table project_has_participants(
                                          project_id int references project(id) on delete cascade ,
                                          participant_id int references usr(id) on delete cascade ,
-                                         role participant_roles not null );
+                                         role varchar(20) not null );
 
+
+create table if not exists comments(
+    id serial primary key,
+    user_id int,
+    task_id int not null,
+    date_of_beginning date not null
+);
+
+alter table comments add constraint user_ref foreign key (user_id) references usr(id) on delete set null ,
+                     add constraint task_ref foreign key (task_id) references task(id) on delete cascade on update cascade
