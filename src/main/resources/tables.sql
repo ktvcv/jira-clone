@@ -17,7 +17,7 @@ create type task_status_type as enum ('feature', 'bug');
 create table if not exists project(id serial primary key,
                                    title varchar(100) not null,
                                    owner_id int not null,
-                                   creation_date date not null default current_date);
+                                   creation_date timestamp not null default current_date);
 
 create sequence if not exists seq_proj start 1;
 
@@ -72,7 +72,7 @@ create sequence if not exists seq_task_extra start 1;
 create table user_has_tasks(
                                task_id int references task (id) on delete cascade on update cascade ,
                                participant_id int references usr (id) on delete cascade ,
-                               affiliation varchar(20) not null );
+                               affiliation varchar(20) not null  );
 
 -- Creation of many-to-many between users and projects
 create table project_has_participants(

@@ -4,3 +4,5 @@ create table if not exists usr(id serial primary key,
                                password varchar(50) not null,
                                creation_date date not null default current_date);
 create sequence if not exists seq_user start 1;
+
+alter table usr alter column creation_date type timestamp;

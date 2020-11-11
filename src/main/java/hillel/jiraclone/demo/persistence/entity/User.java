@@ -2,11 +2,13 @@ package hillel.jiraclone.demo.persistence.entity;
 
 
 import hillel.jiraclone.demo.persistence.common.CommonEntity;
-import hillel.jiraclone.demo.persistence.util.CipherConverter;
-import hillel.jiraclone.demo.service.CipheringService;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usr")
@@ -23,6 +25,14 @@ public class User extends CommonEntity {
     @Column(name = "password")
     @Convert(disableConversion = true)
     private String password;
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Project> projects = new ArrayList<>();
+
+    public User() {
+    }
 
     public String getName() {
         return name;
@@ -47,11 +57,6 @@ public class User extends CommonEntity {
     public void setPassword(String password) {
         this.password = password;
     }
-
-//    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "usr")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    private List<Project> projects = new ArrayList<>();
-
 
 
 }

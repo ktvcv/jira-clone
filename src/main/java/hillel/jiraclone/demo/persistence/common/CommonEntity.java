@@ -1,10 +1,8 @@
 package hillel.jiraclone.demo.persistence.common;
 
 import hillel.jiraclone.demo.persistence.util.CustomLongTimeConverter;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Calendar;
 
 @MappedSuperclass
 public class CommonEntity {
