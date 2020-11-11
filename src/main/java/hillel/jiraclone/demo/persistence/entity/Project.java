@@ -3,6 +3,8 @@ package hillel.jiraclone.demo.persistence.entity;
 
 import hillel.jiraclone.demo.persistence.common.CommonEntity;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -19,6 +21,11 @@ public class Project extends CommonEntity {
     @JoinColumn(name = "owner_id")
     private User user;
 
+    @OneToOne( cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Backlog backlog;
+
     public Project() {
     }
 
@@ -28,6 +35,14 @@ public class Project extends CommonEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

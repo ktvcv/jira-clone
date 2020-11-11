@@ -27,10 +27,10 @@ create sequence if not exists seq_proj start 1;
 -- type varchar(100) not null);
 -- create sequence if not exists seq_dep start 1;
 
-create table if not exists back_log(id serial primary key,
+create table if not exists backlog(id serial primary key,
                                     project_id int not null,
-                                    creation_date date not null default current_date);
-create sequence if not exists backlog_dep start 1;
+                                    creation_date timestamp not null default current_date);
+create sequence if not exists seq_backlog start 1;
 
 
 create table if not exists sprint(id serial primary key,
