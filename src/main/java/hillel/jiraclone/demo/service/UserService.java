@@ -3,7 +3,6 @@ package hillel.jiraclone.demo.service;
 import hillel.jiraclone.demo.persistence.dao.UserDao;
 import hillel.jiraclone.demo.persistence.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,20 +21,26 @@ public class UserService {
 //    }
 
     @Transactional
-    public boolean changePassword(final User user, final String oldPassword, final String newPassword)
-    {
-        if(cipheringService.decrypt(user.getPassword()).equals(oldPassword)){
-            user.setPassword(newPassword);
-            userDao.update(user);
-            return true;
-        }
-        return false;
+    public boolean changePassword(final User user, final String oldPassword, final String newPassword, final String repeatNewPassword) {
+        user.setPassword(newPassword);
+        userDao.update(user);
+        return true;
     }
 
-    public String getUser(final User userFromDB){
+    public boolean checkIfValidNewPassword(final String newPassword, final String confirmPassword) {
+        return newPassword.equals(confirmPassword);
+    }
+
+    public boolean checkIfValidOldPassword(final User user, final String confirmPassword) {
+
+        return (cipheringService.decrypt(user.getPassword()).equals(confirmPassword));
+
+    }
+
+    public String getUser(final User userFromDB) {
         return userFromDB.getName() +
                 userFromDB.getEmail();
-              //TODO:  userFromDB.getPassword();
-            //Может лучше для пароля сделать PasswordEncoder?
+        //TODO:  userFromDB.getPassword();
+        //Может лучше для пароля сделать PasswordEncoder?
     }
 }

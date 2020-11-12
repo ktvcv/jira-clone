@@ -2,7 +2,6 @@ package hillel.jiraclone.demo.persistence.dao;
 
 import hillel.jiraclone.demo.persistence.entity.User;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;

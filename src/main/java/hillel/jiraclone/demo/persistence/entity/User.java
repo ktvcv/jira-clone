@@ -2,8 +2,6 @@ package hillel.jiraclone.demo.persistence.entity;
 
 
 import hillel.jiraclone.demo.persistence.common.CommonEntity;
-import hillel.jiraclone.demo.persistence.util.CipherConverter;
-import hillel.jiraclone.demo.service.CipheringService;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;

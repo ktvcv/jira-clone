@@ -1,9 +1,6 @@
 package hillel.jiraclone.demo.persistence.entity;
 
 import hillel.jiraclone.demo.persistence.common.CommonEntity;
-import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.*;
 
 //@Entity
 //@Table(name = "project")
