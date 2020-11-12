@@ -21,7 +21,7 @@ public class UserService {
 //    }
 
     @Transactional
-    public boolean changePassword(final User user, final String oldPassword, final String newPassword, final String repeatNewPassword) {
+    public boolean changePassword(final User user, final String newPassword) {
         user.setPassword(newPassword);
         userDao.update(user);
         return true;
