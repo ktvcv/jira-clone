@@ -2,6 +2,7 @@ package hillel.jiraclone.demo.persistence.entity;
 
 
 import hillel.jiraclone.demo.persistence.common.CommonEntity;
+import hillel.jiraclone.demo.persistence.entity.projectsHaveParticipants.UsersInProjects;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -31,7 +32,19 @@ public class User extends CommonEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Project> projects = new ArrayList<>();
 
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participant_id")
+    private List<UsersInProjects> inProjects;
+
     public User() {
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
     public String getName() {

@@ -2,8 +2,12 @@ package hillel.jiraclone.demo.persistence.entity;
 
 import hillel.jiraclone.demo.persistence.common.CommonEntity;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "backlog")
@@ -14,6 +18,11 @@ public class Backlog extends CommonEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Task> tasks = new ArrayList<>();
 
     public Backlog() {
     }

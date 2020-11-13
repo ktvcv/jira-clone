@@ -11,10 +11,8 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
     private final UserDao userDao;
 
-    @Autowired
     private final CipheringService cipheringService;
 
     public UserService(@Autowired UserDao userDao, @Autowired CipheringService cipheringService) {
@@ -23,14 +21,20 @@ public class UserService {
     }
 
     @Transactional
-    public boolean changePassword(final User user, final String oldPassword, final String newPassword)
-    {
-        if(cipheringService.decrypt(user.getPassword()).equals(oldPassword)){
-            user.setPassword(newPassword);
-            userDao.update(user);
-            return true;
-        }
-        return false;
+    public boolean changePassword(final User user, final String newPassword) {
+        user.setPassword(newPassword);
+        userDao.update(user);
+        return true;
+    }
+
+    public boolean checkIfValidNewPassword(final String newPassword, final String confirmPassword) {
+        return newPassword.equals(confirmPassword);
+    }
+
+    public boolean checkIfValidOldPassword(final User user, final String confirmPassword) {
+
+        return (cipheringService.decrypt(user.getPassword()).equals(confirmPassword));
+
     }
 
     public String getUser(final User userFromDB){

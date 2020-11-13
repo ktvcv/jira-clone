@@ -3,7 +3,7 @@
 --
 -- create type affiliation as enum ('assigned_to_me', 'created_by_me', 'reviewer_by_me');
 --
--- create type task_status as enum ('todo', 'on_going', 'finished');
+-- create type task_status as enum ('todo', 'in_work', 'finished');
 --
 -- create type task_status_approval as enum ('approved', 'to_be_approved');
 
@@ -34,24 +34,30 @@ create sequence if not exists seq_backlog start 1;
 
 
 create table if not exists sprint(id serial primary key,
-                                  creation_date date not null default current_date,
-                                  date_of_beginning date,
+                                  creation_date timestamp not null default current_date,
+                                  date_of_beginning timestamp,
                                   duration int,
                                   project_id int not null );
 create sequence if not exists seq_sprint start 1;
 
 create table if not exists task(id serial primary key,
                                 title varchar(100) not null,
-                                creation_date date not null default current_date,
+                                creation_date timestamp not null default current_date,
                                 description varchar(500),
                                 duration int,
-                                status_work varchar(20) not null,
-                                status_apr varchar(20) not null,
-                                status_type varchar(20) not null,
+                                status_work varchar(20) not null
+                                    check ( status_work = 'TODO' or
+                                            status_work = 'OPENED' or
+                                            status_work = 'CLOSED'),
+                                status_approval varchar(20) not null
+                                    check ( status_approval = 'APPROVED' or
+                                            status_approval = 'TO_BE_APPROVED'),
+                                type varchar(20) not null
+                                    check ( type = 'BUG' or
+                                            type = 'FEATURE'),
                                 backlog_id int not null ,
                                 sprint_id int ,
                                 extra_info_id int ,
-                                creator_id int not null ,
                                 priority int check ( priority > 0));
 
 create sequence if not exists seq_task start 1;
@@ -60,25 +66,30 @@ create table if not exists usr(id serial primary key,
                                name varchar(50) not null ,
                                email varchar(50) not null ,
                                password varchar(50) not null,
-                               creation_date date not null default current_date);
+                               creation_date timestamp not null default current_date);
 create sequence if not exists seq_client start 1;
 ---------------------------------------------
 create table if not exists extra_task_info(id serial primary key,
                                            file bytea not null,
-                                           creation_date date not null default current_date);
+                                           creation_date timestamp not null default current_date);
 create sequence if not exists seq_task_extra start 1;
 
 -- Creation of many-to-many between users and tasks
 create table user_has_tasks(
                                task_id int references task (id) on delete cascade on update cascade ,
                                participant_id int references usr (id) on delete cascade ,
-                               affiliation varchar(20) not null  );
+                               affiliation varchar(20) not null
+                                   check ( affiliation = 'ASSIGNED_TO_ME' or
+                                            affiliation = 'CREATED_BY_ME' or
+                                            affiliation = 'REVIEWED_BY_ME'));
 
 -- Creation of many-to-many between users and projects
 create table project_has_participants(
                                          project_id int references project(id) on delete cascade ,
                                          participant_id int references usr(id) on delete cascade ,
-                                         role varchar(20) not null );
+                                         role varchar(20) not null
+                                             check ( role = 'SCRUM_MASTER' or
+                                                     role = 'REGULAR_PARTICIPANT'));
 
 
 create table if not exists comments(

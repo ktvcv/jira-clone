@@ -2,11 +2,14 @@ package hillel.jiraclone.demo.persistence.entity;
 
 
 import hillel.jiraclone.demo.persistence.common.CommonEntity;
+import hillel.jiraclone.demo.persistence.entity.projectsHaveParticipants.UsersInProjects;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "project")
@@ -14,19 +17,44 @@ import javax.persistence.*;
 @DynamicUpdate
 public class Project extends CommonEntity {
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "owner_id")
     private User user;
 
-    @OneToOne( cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, optional = false)
+    @OneToOne( cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Backlog backlog;
 
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Sprint> sprints = new ArrayList<>();
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private List<UsersInProjects> participants;
+
     public Project() {
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
+    }
+
+    public List<Sprint> getSprints() {
+        return sprints;
+    }
+
+    public void setSprints(List<Sprint> sprints) {
+        this.sprints = sprints;
     }
 
     public String getTitle() {
