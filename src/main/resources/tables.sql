@@ -77,7 +77,7 @@ create sequence if not exists seq_task_extra start 1;
 -- Creation of many-to-many between users and tasks
 create table user_has_tasks(
                                task_id int references task (id) on delete cascade on update cascade ,
-                               participant_id int references usr (id) on delete cascade ,
+                               user_id int references usr (id) on delete cascade ,
                                affiliation varchar(20) not null
                                    check ( affiliation = 'ASSIGNED_TO_ME' or
                                             affiliation = 'CREATED_BY_ME' or
