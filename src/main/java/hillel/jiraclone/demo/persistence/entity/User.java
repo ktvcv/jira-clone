@@ -18,10 +18,10 @@ import java.util.List;
 @DynamicUpdate
 public class User extends CommonEntity {
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")

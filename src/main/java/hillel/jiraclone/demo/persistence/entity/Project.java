@@ -20,9 +20,13 @@ public class Project extends CommonEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "owner_id", nullable = false)
     private User user;
+
 
     @OneToOne( cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id")

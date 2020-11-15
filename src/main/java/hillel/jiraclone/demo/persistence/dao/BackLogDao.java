@@ -5,6 +5,6 @@ import hillel.jiraclone.demo.persistence.entity.Backlog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BackLog extends CommonDao<Backlog> {
+public class BackLogDao extends CommonDao<Backlog> {
 
 }

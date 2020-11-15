@@ -7,6 +7,7 @@ import org.springframework.util.Assert;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 @Component
 @Converter(autoApply = true)
@@ -17,13 +18,13 @@ public class CipherConverter implements AttributeConverter<String, String> {
 
     @Override
     public String convertToDatabaseColumn(String s) {
-        Assert.notNull(s, "You can't encrypt null");
+        if (Objects.isNull(s)) return null;
         return cipheringService.encrypt(s);
     }
 
     @Override
     public String convertToEntityAttribute(String s) {
-        Assert.notNull(s, "You can't decrypt null");
+        if (Objects.isNull(s)) return null;
         return cipheringService.decrypt(s);
     }
 }

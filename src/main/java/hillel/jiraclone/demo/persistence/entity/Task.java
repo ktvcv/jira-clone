@@ -50,7 +50,7 @@ public class Task extends CommonEntity {
     @JoinColumn(name = "task_id")
     private List<UsersWithTasks> users;
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Comment> comments = new ArrayList<>();

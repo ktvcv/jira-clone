@@ -3,10 +3,10 @@ package hillel.jiraclone.demo.service;
 import hillel.jiraclone.demo.persistence.dao.UserDao;
 import hillel.jiraclone.demo.persistence.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class UserService {
@@ -37,18 +37,16 @@ public class UserService {
 
     }
 
-    public String getUser(final User userFromDB){
+    public String getUser(final User userFromDB) {
         return userFromDB.getName() +
                 userFromDB.getEmail();
-              //TODO: cipheringService.userFromDB.getPassword();
-            //Может для пароля сделать какой-то отдельный PasswordEncoder?
+        //TODO: cipheringService.userFromDB.getPassword();
+        //Может для пароля сделать какой-то отдельный PasswordEncoder?
     }
 
-    public List<User> getForPage(int start, int number){
-        return userDao.list(start, number);
+    public Page<User> getForPage(int page, int size) {
+        return userDao.listPageable(PageRequest.of(page, size));
     }
-
-
 
 
 }
