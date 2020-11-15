@@ -31,3 +31,5 @@ build/
 mvnw
 mvnw.cmd
 
+
+/src/jira-clone/node_modules/
