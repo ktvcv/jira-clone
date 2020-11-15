@@ -92,12 +92,15 @@ create table project_has_participants(
                                                      role = 'REGULAR_PARTICIPANT'));
 
 
-create table if not exists comments(
+create table if not exists comment(
     id serial primary key,
     user_id int,
     task_id int not null,
-    date_of_beginning date not null
+    creation_date timestamp not null default current_date
 );
 
-alter table comments add constraint user_ref foreign key (user_id) references usr(id) on delete set null ,
+alter table comment add constraint user_ref foreign key (user_id) references usr(id) on delete set null ,
                      add constraint task_ref foreign key (task_id) references task(id) on delete cascade on update cascade
+
+
+

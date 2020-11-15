@@ -1,10 +1,9 @@
 package hillel.jiraclone.demo.persistence.dao;
 
 import hillel.jiraclone.demo.persistence.common.CommonDao;
-import hillel.jiraclone.demo.persistence.entity.User;
+import hillel.jiraclone.demo.persistence.entity.Comment;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDao extends CommonDao<User> {
-
+public class CommentDao extends CommonDao<Comment> {
 }

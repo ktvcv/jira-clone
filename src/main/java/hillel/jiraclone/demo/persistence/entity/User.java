@@ -41,6 +41,11 @@ public class User extends CommonEntity {
     @JoinColumn(name = "user_id")
     private List<UsersWithTasks> tasks;
 
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private List<Comment> comments = new ArrayList<>();
+
     public User() {
     }
 
@@ -76,5 +81,27 @@ public class User extends CommonEntity {
         this.password = password;
     }
 
+    public List<UsersInProjects> getInProjects() {
+        return inProjects;
+    }
 
+    public void setInProjects(List<UsersInProjects> inProjects) {
+        this.inProjects = inProjects;
+    }
+
+    public List<UsersWithTasks> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<UsersWithTasks> tasks) {
+        this.tasks = tasks;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

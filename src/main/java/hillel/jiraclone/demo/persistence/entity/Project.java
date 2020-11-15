@@ -21,7 +21,7 @@ public class Project extends CommonEntity {
     private String title;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id", nullable = false)
     private User user;
 
     @OneToOne( cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
@@ -37,6 +37,7 @@ public class Project extends CommonEntity {
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private List<UsersInProjects> participants;
+
 
     public Project() {
     }
@@ -72,5 +73,14 @@ public class Project extends CommonEntity {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public List<UsersInProjects> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<UsersInProjects> participants) {
+        this.participants = participants;
+    }
+
 }
 

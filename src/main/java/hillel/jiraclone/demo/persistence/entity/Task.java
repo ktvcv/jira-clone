@@ -7,8 +7,11 @@ import hillel.jiraclone.demo.persistence.enumeration.TaskStatusApproved;
 import hillel.jiraclone.demo.persistence.enumeration.TaskStatusWork;
 import hillel.jiraclone.demo.persistence.enumeration.TaskType;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -46,6 +49,11 @@ public class Task extends CommonEntity {
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
     private List<UsersWithTasks> users;
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Comment> comments = new ArrayList<>();
 
     public Task() {
     }
@@ -114,5 +122,11 @@ public class Task extends CommonEntity {
         this.users = users;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }
