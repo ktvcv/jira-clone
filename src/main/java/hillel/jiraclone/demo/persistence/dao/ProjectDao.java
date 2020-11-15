@@ -3,6 +3,7 @@ package hillel.jiraclone.demo.persistence.dao;
 import hillel.jiraclone.demo.persistence.common.CommonDao;
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.Project_;
+import hillel.jiraclone.demo.persistence.entity.User;
 import hillel.jiraclone.demo.persistence.entity.User_;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -34,4 +36,9 @@ public class ProjectDao extends CommonDao<Project> {
 
         return entityManager.createQuery(cq).getResultList();
     }
+
+    public List<User> getParticipantsInProject(Integer projectId){
+        return Collections.emptyList();
+    }
+
 }
