@@ -11,6 +11,7 @@ import java.util.List;
 
 public abstract class CommonDao<T extends CommonEntity> {
 
+    //TODO: переделать селекты на Page<> 11/15/2020
     private Class<T> aClass;
 
     @PersistenceContext
@@ -42,7 +43,7 @@ public abstract class CommonDao<T extends CommonEntity> {
     public List<T> listPageable(int start, int pageSize) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(aClass);
-        Root<T> root = criteriaQuery.from(aClass);
+        criteriaQuery.from(aClass);
 
         return entityManager.createQuery(criteriaQuery)
                 .setFirstResult(start)

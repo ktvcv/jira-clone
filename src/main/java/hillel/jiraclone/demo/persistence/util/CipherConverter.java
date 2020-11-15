@@ -7,7 +7,6 @@ import org.springframework.util.Assert;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-import java.util.Optional;
 
 @Component
 @Converter(autoApply = true)
