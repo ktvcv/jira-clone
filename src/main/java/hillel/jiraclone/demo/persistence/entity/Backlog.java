@@ -19,7 +19,7 @@ public class Backlog extends CommonEntity {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Task> tasks = new ArrayList<>();

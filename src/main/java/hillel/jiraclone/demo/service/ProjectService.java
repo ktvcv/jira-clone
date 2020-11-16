@@ -7,22 +7,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class ProjectService {
 
-    @Autowired
     private ProjectDao projectDao;
 
-    @Transactional(readOnly = true)
-    public List<Project> getAllUserProjectByUserEmail(Integer id){
-        return projectDao.getAllUserProjectById(id);
+    @Autowired
+    public ProjectService(final ProjectDao projectDao) {
+        this.projectDao = projectDao;
+        this.projectDao.setAClass(Project.class);
     }
 
+    @Transactional(readOnly = true)
+    public List<Project> getAllUserProjectByUserName(Integer id){
+        return Collections.emptyList();
+    }
 
     @Transactional(readOnly = true)
     public List<Project> getAllUserProjectByUserId(Integer id){
         return projectDao.getAllUserProjectById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Project> getProjectsWhereUserIsParticipantByName(String userName){
+        return Collections.emptyList();
     }
 }

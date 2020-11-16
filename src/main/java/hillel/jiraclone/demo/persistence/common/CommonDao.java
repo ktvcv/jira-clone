@@ -12,7 +12,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public abstract class CommonDao<T extends CommonEntity> {
+//todo: refactoring
+public abstract class CommonDao<T extends CommonEntity> implements ICrud {
 
     private Class<T> aClass;
 

@@ -11,20 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 @Service
-public class UserService {
-
-    private UserDao userDao;
+public class UserService  {
 
     @Autowired
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-        this.userDao.setAClass(User.class);
-    }
+    private UserDao userDao;
 
     @Transactional
     public boolean changePassword(final User user, final String newPassword) {
         user.setPassword(newPassword);
-        userDao.update(user);
         return true;
     }
 
@@ -44,12 +38,10 @@ public class UserService {
     }
 
 
-    public Page<User> getForPage(int page, int size) {
-        return userDao.listPageable(PageRequest.of(page, size));
-    }
-
     public User getUserByEmail(String email){
        return userDao.getUserByEmail(email);
     }
+
+
 
 }
