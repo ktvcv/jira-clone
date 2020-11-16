@@ -67,7 +67,7 @@ create table if not exists usr(id serial primary key,
                                email varchar(50) not null ,
                                password varchar(50) not null,
                                creation_date timestamp not null default current_date);
-create sequence if not exists seq_client start 1;
+create sequence if not exists seq_user start 1;
 ---------------------------------------------
 create table if not exists extra_task_info(id serial primary key,
                                            file bytea not null,
@@ -99,6 +99,7 @@ create table if not exists comment(
     creation_date timestamp not null default current_date
 );
 
+create sequence if not exists seq_com start 1;
 alter table comment add constraint user_ref foreign key (user_id) references usr(id) on delete set null ,
                      add constraint task_ref foreign key (task_id) references task(id) on delete cascade on update cascade
 

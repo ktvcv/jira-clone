@@ -1,5 +1,6 @@
 package hillel.jiraclone.demo.persistence.util;
 
+import hillel.jiraclone.demo.persistence.util.constants.Constants;
 import hillel.jiraclone.demo.service.CipheringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.util.Objects;
 public class CipherConverter implements AttributeConverter<String, String> {
 
     @Autowired
-    CipheringService cipheringService;
+    private CipheringService cipheringService;
 
     @Override
     public String convertToDatabaseColumn(String s) {

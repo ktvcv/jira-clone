@@ -2,6 +2,7 @@ package hillel.jiraclone.demo.service;
 
 import hillel.jiraclone.demo.persistence.dao.UserDao;
 import hillel.jiraclone.demo.persistence.entity.User;
+import hillel.jiraclone.demo.persistence.util.constants.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,14 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-    private final UserDao userDao;
+    @Autowired
+    private UserDao userDao;
 
-    private final CipheringService cipheringService;
-
-    public UserService(@Autowired UserDao userDao, @Autowired CipheringService cipheringService) {
-        this.userDao = userDao;
-        this.cipheringService = cipheringService;
-    }
+    @Autowired
+    private CipheringService cipheringService;
 
     @Transactional
     public boolean changePassword(final User user, final String newPassword) {
