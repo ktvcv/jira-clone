@@ -27,15 +27,12 @@ public class Project extends CommonEntity {
     @JoinColumn(name = "owner_id", nullable = false)
     private User user;
 
-
-    @OneToOne( cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne( cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Backlog backlog;
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Sprint> sprints = new ArrayList<>();
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)

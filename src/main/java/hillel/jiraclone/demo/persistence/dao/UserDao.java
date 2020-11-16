@@ -11,19 +11,18 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Collections;
+import java.util.List;
 
 @Repository
 public class UserDao extends CommonDao<User> {
-
 
     @Transactional(readOnly = true)
     public User getUserByEmail(String email) {
         return super.getEntityByField(User_.EMAIL,email);
     }
 
-    @Transactional(readOnly = true)
-    public User getUserByName(String name) {
-        return super.getEntityByField(User_.NAME, name);
+    public List<User> getParticipantsInProject(Integer projectId){
+        return Collections.emptyList();
     }
-
 }

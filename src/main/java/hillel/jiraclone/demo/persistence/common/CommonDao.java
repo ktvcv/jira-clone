@@ -23,9 +23,10 @@ public abstract class CommonDao<T extends CommonEntity> {
         this.aClass = aClass;
     }
 
-    public void persist(final T entity) {
+    public T create(final T entity) {
         Assert.notNull(entity, "entity must be a set");
         entityManager.persist(entity);
+        return entity;
     }
 
     public void update(final T entity) {
@@ -37,7 +38,7 @@ public abstract class CommonDao<T extends CommonEntity> {
         return entityManager.find(aClass, id);
     }
 
-    public void delete(T entity) {
+    public void delete(final T entity) {
         entityManager.remove(entity);
     }
 
@@ -117,18 +118,6 @@ public abstract class CommonDao<T extends CommonEntity> {
         return entityManager.createQuery(criteriaQuery)
                 .setMaxResults(1)
                 .getSingleResult();
-    }
-
-    public Page<T> getEntitiesByField(String field, Object param, Pageable pageable) {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(aClass);
-        Root<T> root = criteriaQuery.from(aClass);
-
-        criteriaQuery.select(root)
-                .where(criteriaBuilder
-                        .equal(root.get(field), param));
-
-        return getTs(pageable, criteriaBuilder, criteriaQuery);
     }
 
 }

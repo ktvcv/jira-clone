@@ -13,9 +13,13 @@ import java.util.Objects;
 @Service
 public class UserService {
 
-    @Autowired
     private UserDao userDao;
 
+    @Autowired
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+        this.userDao.setAClass(User.class);
+    }
 
     @Transactional
     public boolean changePassword(final User user, final String newPassword) {
@@ -44,5 +48,8 @@ public class UserService {
         return userDao.listPageable(PageRequest.of(page, size));
     }
 
+    public User getUserByEmail(String email){
+       return userDao.getUserByEmail(email);
+    }
 
 }

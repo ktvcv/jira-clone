@@ -37,8 +37,4 @@ public class ProjectDao extends CommonDao<Project> {
         return entityManager.createQuery(cq).getResultList();
     }
 
-    public List<User> getParticipantsInProject(Integer projectId){
-        return Collections.emptyList();
-    }
-
 }

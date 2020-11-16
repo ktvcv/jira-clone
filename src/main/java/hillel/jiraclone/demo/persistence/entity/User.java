@@ -18,7 +18,7 @@ import java.util.List;
 @DynamicUpdate
 public class User extends CommonEntity {
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Column(name = "email", unique = true)
@@ -27,6 +27,10 @@ public class User extends CommonEntity {
     @Column(name = "password")
     //@Convert(disableConversion = true)
     private String password;
+
+    @Column(name = "fullname")
+    //@Convert(disableConversion = true)
+    private String fullname;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id")

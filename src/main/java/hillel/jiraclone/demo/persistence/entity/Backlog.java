@@ -15,7 +15,7 @@ import java.util.List;
 @DynamicUpdate
 public class Backlog extends CommonEntity {
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "project_id")
     private Project project;
 
