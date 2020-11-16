@@ -17,7 +17,6 @@ import java.util.List;
 @Repository
 public class UserDao extends CommonDao<User> {
 
-    @Transactional(readOnly = true)
     public User getUserByEmail(String email) {
         return super.getEntityByField(User_.EMAIL,email);
     }
