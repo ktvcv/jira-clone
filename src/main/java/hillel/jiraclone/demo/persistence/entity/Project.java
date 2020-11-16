@@ -93,5 +93,15 @@ public class Project extends CommonEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", user=" + user +
+                ", backlog=" + backlog +
+                '}';
+    }
 }
 

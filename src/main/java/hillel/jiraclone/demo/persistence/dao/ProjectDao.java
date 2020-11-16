@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,15 +25,14 @@ public class ProjectDao extends CommonDao<Project> {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional(readOnly = true)
-    public List<Project> getAllUserProjectByName(String userName) {
+    public List<Project> getAllUserProjectById(Integer id) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Project> cq = cb.createQuery(Project.class);
 
         Root<Project> root = cq.from(Project.class);
         root.fetch(Project_.USER, JoinType.LEFT);
 
-        cq.where(cb.equal(root.get(Project_.USER).get(User_.NAME), userName));
+        cq.where(cb.equal(root.get(Project_.USER).get(User_.ID), id));
 
         return entityManager.createQuery(cq).getResultList();
     }

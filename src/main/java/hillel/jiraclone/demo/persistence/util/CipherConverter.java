@@ -11,21 +11,18 @@ import javax.persistence.Converter;
 import java.util.Objects;
 
 @Component
-@Converter(autoApply = true)
+//@Converter(autoApply = true)
 public class CipherConverter implements AttributeConverter<String, String> {
-
-    @Autowired
-    private CipheringService cipheringService;
 
     @Override
     public String convertToDatabaseColumn(String s) {
         if (Objects.isNull(s)) return null;
-        return cipheringService.encrypt(s);
+        return CipheringService.encrypt(s);
     }
 
     @Override
     public String convertToEntityAttribute(String s) {
         if (Objects.isNull(s)) return null;
-        return cipheringService.decrypt(s);
+        return CipheringService.decrypt(s);
     }
 }

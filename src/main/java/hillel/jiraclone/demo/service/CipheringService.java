@@ -16,13 +16,12 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Objects;
 
-@Service
 public class CipheringService {
 
     private static SecretKeySpec secretKey;
     private static byte[] key;
 
-    public void setKey(String myKey)
+    public static void setKey(String myKey)
     {
         MessageDigest sha = null;
         try {
@@ -37,7 +36,7 @@ public class CipheringService {
         }
     }
 
-    public String encrypt(String strToEncrypt)
+    public static String encrypt(String strToEncrypt)
     {
         if(Objects.isNull(strToEncrypt)) return null;
         try
@@ -53,7 +52,7 @@ public class CipheringService {
 
     }
 
-    public String decrypt(String strToDecrypt)
+    public static String decrypt(String strToDecrypt)
     {
         if(Objects.isNull(strToDecrypt)) return null;
         try

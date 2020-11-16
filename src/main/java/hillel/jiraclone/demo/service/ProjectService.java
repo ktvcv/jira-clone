@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Service
@@ -15,7 +16,13 @@ public class ProjectService {
     private ProjectDao projectDao;
 
     @Transactional(readOnly = true)
-    public List<Project> getAllUserProject(String userName){
-        return projectDao.getAllUserProjectByName(userName);
+    public List<Project> getAllUserProjectByUserEmail(Integer id){
+        return projectDao.getAllUserProjectById(id);
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<Project> getAllUserProjectByUserId(Integer id){
+        return projectDao.getAllUserProjectById(id);
     }
 }
