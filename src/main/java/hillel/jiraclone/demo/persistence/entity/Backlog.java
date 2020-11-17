@@ -15,13 +15,12 @@ import java.util.List;
 @DynamicUpdate
 public class Backlog extends CommonEntity {
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "project_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Task> tasks = new ArrayList<>();
 
     public Backlog() {
