@@ -1,6 +1,7 @@
 package hillel.jiraclone.demo.persistence.dao;
 
 import hillel.jiraclone.demo.persistence.common.CommonDao;
+import hillel.jiraclone.demo.persistence.dao.interfaces.IProjectDao;
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.Project_;
 import hillel.jiraclone.demo.persistence.entity.User;
@@ -20,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class ProjectDao extends CommonDao<Project> {
+public class ProjectDao extends CommonDao<Project, Integer> implements IProjectDao {
 
     @PersistenceContext
     private EntityManager entityManager;

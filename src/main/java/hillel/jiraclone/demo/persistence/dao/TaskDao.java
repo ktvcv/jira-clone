@@ -1,6 +1,7 @@
 package hillel.jiraclone.demo.persistence.dao;
 
 import hillel.jiraclone.demo.persistence.common.CommonDao;
+import hillel.jiraclone.demo.persistence.dao.interfaces.ITaskDao;
 import hillel.jiraclone.demo.persistence.entity.Task;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class TaskDao extends CommonDao<Task> {
+public class TaskDao extends CommonDao<Task, Integer> implements ITaskDao {
 
     public List<Task> getAllTasksCreatedByUser(){
         return Collections.emptyList();

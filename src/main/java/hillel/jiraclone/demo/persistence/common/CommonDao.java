@@ -3,44 +3,60 @@ package hillel.jiraclone.demo.persistence.common;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
-//todo: refactoring
-public abstract class CommonDao<T extends CommonEntity> implements ICrud {
+public abstract class CommonDao<T extends CommonEntity, K> implements ICommonDao<T, K> {
 
     private Class<T> aClass;
+
+    @Override
+    public T save(T entity) {
+        entityManager.persist(entity);
+        return entity;
+    }
+
+    @Override
+    public void update(T entity) {
+        entityManager.merge(entity);
+    }
+
+    @Override
+    public void remove(T entity) {
+        entityManager.remove(entity);
+    }
+
+    @Override
+    public T find(K key) {
+        return entityManager.find(aClass, key);
+    }
 
     @PersistenceContext
     private EntityManager entityManager;
 
     public void setAClass(Class<T> aClass) {
-        this.aClass = aClass;
+        Type t = getClass().getGenericSuperclass();
+        ParameterizedType pt = (ParameterizedType) t;
+        this.aClass = (Class) pt.getActualTypeArguments()[0];
     }
 
-    public T create(final T entity) {
-        Assert.notNull(entity, "entity must be a set");
-        entityManager.persist(entity);
-        return entity;
-    }
+    @Override
+    public List<T> getAll() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(aClass);
+        Root<T> rootEntry = cq.from(aClass);
+        CriteriaQuery<T> all = cq.select(rootEntry);
 
-    public void update(final T entity) {
-        Assert.notNull(entity, "entity must be a set");
-        entityManager.merge(entity);
-    }
-
-    public T findById(Integer id) {
-        return entityManager.find(aClass, id);
-    }
-
-    public void delete(final T entity) {
-        entityManager.remove(entity);
+        TypedQuery<T> allQuery = entityManager.createQuery(all);
+        return allQuery.getResultList();
     }
 
     public Page<T> listPageable(Pageable pageable) {

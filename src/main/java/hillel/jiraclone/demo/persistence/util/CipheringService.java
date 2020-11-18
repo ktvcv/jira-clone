@@ -1,4 +1,4 @@
-package hillel.jiraclone.demo.service;
+package hillel.jiraclone.demo.persistence.util;
 
 import hillel.jiraclone.demo.exceptions.EncodingException;
 import hillel.jiraclone.demo.persistence.util.constants.Constants;
