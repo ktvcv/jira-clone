@@ -6,10 +6,10 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ICommonDao<T extends CommonEntity, K> {
-    public T save(T entity) ;
-    public void update(T entity) ;
-    public void remove(T entity);
-    public T find(K key);
-    public Page<T> listPageable(Pageable pageable);
-    public List<T> getAll() ;
+    T save(T entity) ;
+    void update(T entity) ;
+    void remove(T entity);
+    T find(K key);
+    Page<T> listPageable(Pageable pageable);
+    List<T> getAll() ;
 }
