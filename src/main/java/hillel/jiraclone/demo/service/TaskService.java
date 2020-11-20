@@ -28,4 +28,29 @@ public class TaskService extends CommonService<Task, Integer> implements ITaskSe
     public List<Task> getAllTasksInProject(Integer projectId) {
         return null;
     }
+
+    @Override
+    public List<Task> getAllOpenedTasksInProject(Integer projectId) {
+        return null;
+    }
+
+    @Override
+    public List<Task> getAllTodoTasksInProject(Integer projectId) {
+        return null;
+    }
+
+    @Override
+    public List<Task> getAllToBeApprovedTasksInProject(Integer projectId) {
+        return null;
+    }
+
+    @Override
+    public List<Task> getAllBugsTasksInProject(Integer projectId) {
+        return null;
+    }
+
+    @Override
+    public List<Task> getAllFeatureTasksInProject(Integer projectId) {
+        return null;
+    }
 }
