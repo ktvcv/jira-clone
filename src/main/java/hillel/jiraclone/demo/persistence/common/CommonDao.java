@@ -3,6 +3,7 @@ package hillel.jiraclone.demo.persistence.common;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +15,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
+@Repository
 public abstract class CommonDao<T extends CommonEntity, K> implements ICommonDao<T, K> {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private Class<T> aClass;
 
@@ -39,13 +45,11 @@ public abstract class CommonDao<T extends CommonEntity, K> implements ICommonDao
         return entityManager.find(aClass, key);
     }
 
-    @PersistenceContext
-    private EntityManager entityManager;
 
     public void setAClass(Class<T> aClass) {
         Type t = getClass().getGenericSuperclass();
         ParameterizedType pt = (ParameterizedType) t;
-        this.aClass = (Class) pt.getActualTypeArguments()[0];
+        this.aClass = (Class<T>) pt.getActualTypeArguments()[0];
     }
 
     @Override
@@ -59,6 +63,7 @@ public abstract class CommonDao<T extends CommonEntity, K> implements ICommonDao
         return allQuery.getResultList();
     }
 
+    @Override
     public Page<T> listPageable(Pageable pageable) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(aClass);

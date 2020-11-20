@@ -2,13 +2,13 @@ package hillel.jiraclone.demo.persistence.common;
 
 import java.util.List;
 
-public abstract class CommonService<T extends CommonEntity, K>
+public  class CommonService<T extends CommonEntity, K>
                 implements ICommonService<T, K>{
 
-    private ICommonDao<T, K> dao;
+    private ICommonDao<T, K> iDao;
 
-    public CommonService(ICommonDao<T, K> dao) {
-        this.dao = dao;
+    public CommonService(ICommonDao<T, K> iDao) {
+        this.iDao = iDao;
     }
 
     public CommonService() {
@@ -16,31 +16,33 @@ public abstract class CommonService<T extends CommonEntity, K>
 
     @Override
     public void saveOrUpdate(T entity) {
-
+        if(entity.isNew())
+            iDao.save(entity);
+        else iDao.update(entity);
     }
 
     @Override
     public List<T> getAll() {
-        return null;
+        return iDao.getAll();
     }
 
     @Override
     public T get(K id) {
-        return null;
+        return iDao.find(id);
     }
 
     @Override
     public void add(T entity) {
-
+        iDao.save(entity);
     }
 
     @Override
     public void update(T entity) {
-
+        iDao.update(entity);
     }
 
     @Override
     public void remove(T entity) {
-
+        iDao.remove(entity);
     }
 }

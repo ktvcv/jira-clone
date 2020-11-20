@@ -5,7 +5,7 @@ import hillel.jiraclone.demo.persistence.util.CustomLongTimeConverter;
 import javax.persistence.*;
 
 @MappedSuperclass
-public class CommonEntity {
+public abstract class CommonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_name")
     private Integer id;
@@ -20,5 +20,9 @@ public class CommonEntity {
 
     public Long getCreationDate() {
         return creationDate;
+    }
+
+    public boolean isNew(){
+        return this.id == null;
     }
 }
