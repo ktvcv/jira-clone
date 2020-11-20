@@ -13,6 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "task")
@@ -46,16 +47,41 @@ public class Task extends CommonEntity {
     @JoinColumn(name = "sprint_id")
     private Sprint sprint;
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
-    private List<UsersWithTasks> users;
+    private List<UsersWithTasks> users = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Comment> comments = new ArrayList<>();
 
+    @OneToOne( cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    private TaskExtraInfo taskExtraInfo;
+
     public Task() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return getId() != null && getId().equals(task.getId());
+    }
+
+    public TaskExtraInfo getTaskExtraInfo() {
+        return taskExtraInfo;
+    }
+
+    public void setTaskExtraInfo(TaskExtraInfo taskExtraInfo) {
+        this.taskExtraInfo = taskExtraInfo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle());
     }
 
     public String getTitle() {

@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sprint")
@@ -31,6 +32,20 @@ public class Sprint extends CommonEntity {
     @JoinColumn(name = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Task> tasks = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sprint sprint = (Sprint) o;
+        return getId() != null && getId().equals(sprint.getId()) &&
+                getProject().equals(sprint.getProject());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getProject());
+    }
 
     public Sprint() {
     }

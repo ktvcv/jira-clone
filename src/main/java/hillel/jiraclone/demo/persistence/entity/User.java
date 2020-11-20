@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "usr")
@@ -49,6 +50,23 @@ public class User extends CommonEntity {
     @JoinColumn(name = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Comment> comments = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId() != null && getId().equals(user.getId()) &&
+                getName().equals(user.getName()) &&
+                getEmail().equals(user.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCreationDate(), getName(), getEmail(),
+                getPassword(), getFullname(), getProjects(), getInProjects(),
+                getTasks(), getComments());
+    }
 
     public User() {
     }
@@ -107,6 +125,14 @@ public class User extends CommonEntity {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     @Override

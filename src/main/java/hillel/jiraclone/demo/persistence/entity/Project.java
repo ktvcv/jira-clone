@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "project")
@@ -27,18 +28,31 @@ public class Project extends CommonEntity {
     @JoinColumn(name = "owner_id", nullable = false)
     private User user;
 
-    @OneToOne( cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne( cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "id")
     private Backlog backlog;
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "id")
     private List<Sprint> sprints = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private List<UsersInProjects> participants;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return getId() != null && getId().equals(project.getId()) &&
+                getUser().equals(project.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUser(), getId());
+    }
 
     public Project() {
     }

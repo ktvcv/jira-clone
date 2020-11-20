@@ -4,6 +4,7 @@ import hillel.jiraclone.demo.persistence.common.CommonEntity;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "comment")
@@ -21,4 +22,45 @@ public class Comment extends CommonEntity {
     @ManyToOne
     @JoinColumn(name = "task_id")
     private Task task;
+
+    public Comment() {
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return getId() != null && getId().equals(comment.getId()) &&
+                getTask().equals(comment.getTask());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTask());
+    }
 }
