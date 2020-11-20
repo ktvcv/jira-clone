@@ -30,6 +30,7 @@ public class DemoApplication {
         user.setPassword("password");
         userService.saveOrUpdate(user);
 
+
     }
 
 }

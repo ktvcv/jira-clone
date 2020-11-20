@@ -1,8 +1,11 @@
 package hillel.jiraclone.demo.persistence.common;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-public  class CommonService<T extends CommonEntity, K>
+@Service
+public abstract class CommonService<T extends CommonEntity, K>
                 implements ICommonService<T, K>{
 
     private ICommonDao<T, K> iDao;

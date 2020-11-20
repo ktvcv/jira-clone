@@ -19,18 +19,16 @@ import java.util.Objects;
 @DynamicUpdate
 public class User extends CommonEntity {
 
-    @Column(name = "name", unique = true)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password")
-    //@Convert(disableConversion = true)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "fullname")
-    //@Convert(disableConversion = true)
     private String fullname;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
