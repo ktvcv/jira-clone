@@ -1,6 +1,7 @@
 package hillel.jiraclone.demo;
 
 
+import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.User;
 import hillel.jiraclone.demo.service.*;
 import org.springframework.context.ApplicationContext;
@@ -30,6 +31,11 @@ public class DemoApplication {
         user.setPassword("password");
         userService.saveOrUpdate(user);
 
+        System.out.println(userService.getAll());
+
+        Project project = new Project();
+        User userFromDB = userService.getUserByEmail("email");
+        userFromDB.getProjects().add(project);
 
     }
 

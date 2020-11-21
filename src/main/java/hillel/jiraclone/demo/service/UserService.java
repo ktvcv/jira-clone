@@ -3,6 +3,7 @@ package hillel.jiraclone.demo.service;
 import hillel.jiraclone.demo.persistence.common.CommonService;
 import hillel.jiraclone.demo.persistence.common.ICommonDao;
 import hillel.jiraclone.demo.persistence.dao.UserDao;
+import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.User;
 import hillel.jiraclone.demo.persistence.util.CipheringService;
 import hillel.jiraclone.demo.service.interfaces.IUserService;
@@ -69,5 +70,11 @@ public class UserService extends CommonService<User, Integer> implements IUserSe
     @Override
     public User getAllUsersTasksInProject(Integer userId, Integer projectId) {
         return null;
+    }
+
+    public void addProject(User user, Project project){
+        List<Project> list = user.getProjects();
+        list.add(project);
+        user.setProjects(list);
     }
 }

@@ -20,7 +20,7 @@ public class Comment extends CommonEntity {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "task_id")
+    @JoinColumn(name = "task_id", nullable = false)
     private Task task;
 
     public Comment() {

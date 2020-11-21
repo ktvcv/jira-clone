@@ -38,7 +38,7 @@ public class Project extends CommonEntity {
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
-    private List<UsersInProjects> participants;
+    private List<UsersInProjects> participants = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

@@ -10,3 +10,6 @@ alter table task add constraint backlog_ref foreign key (backlog_id) references 
 
 alter table comments add constraint user_ref foreign key (user_id) references usr(id) on delete set null ,
                      add constraint task_ref foreign key (task_id) references task(id) on delete cascade on update cascade
+
+
+alter table extra_task_info add constraint task_ref foreign  key (task_id) references task(id) on delete cascade , on update cascade

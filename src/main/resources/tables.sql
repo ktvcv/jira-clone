@@ -72,7 +72,8 @@ create sequence if not exists seq_user start 1;
 ---------------------------------------------
 create table if not exists extra_task_info(id serial primary key,
                                            file bytea not null,
-                                           creation_date timestamp not null default current_date);
+                                           creation_date timestamp not null default current_date,
+                                            task_id int not null);
 create sequence if not exists seq_task_extra start 1;
 
 -- Creation of many-to-many between users and tasks
@@ -103,6 +104,4 @@ create table if not exists comment(
 create sequence if not exists seq_com start 1;
 alter table comment add constraint user_ref foreign key (user_id) references usr(id) on delete set null ,
                      add constraint task_ref foreign key (task_id) references task(id) on delete cascade on update cascade
-
-
 

@@ -28,7 +28,7 @@ public class Sprint extends CommonEntity {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Task> tasks = new ArrayList<>();
