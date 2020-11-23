@@ -72,44 +72,6 @@ public abstract class CommonDao<T extends CommonEntity, K> implements ICommonDao
         return getTs(pageable, criteriaBuilder, criteriaQuery);
     }
 
-    public Page<T> getAllInCreationDatePageable(Long dateToFind, Pageable pageable) {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(aClass);
-        Root<T> root = criteriaQuery.from(aClass);
-
-        criteriaQuery.select(root)
-                .where(criteriaBuilder
-                        .equal(root
-                                .get(CommonEntity_.CREATION_DATE), dateToFind));
-
-        return getTs(pageable, criteriaBuilder, criteriaQuery);
-    }
-
-    public Page<T> getAllAfterCreationDatePageable(Long dateToFind, Pageable pageable) {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(aClass);
-        Root<T> root = criteriaQuery.from(aClass);
-
-        criteriaQuery.select(root)
-                .where(criteriaBuilder.gt(root
-                        .get(CommonEntity_.CREATION_DATE), dateToFind))
-                .orderBy(criteriaBuilder.desc(root.get(CommonEntity_.CREATION_DATE)));
-
-        return getTs(pageable, criteriaBuilder, criteriaQuery);
-    }
-
-    public Page<T> getAllBeforeCreationDatePageable(Long dateToFind, Pageable pageable) {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(aClass);
-        Root<T> root = criteriaQuery.from(aClass);
-
-        criteriaQuery.select(root)
-                .where(criteriaBuilder.lt(root
-                        .get(CommonEntity_.CREATION_DATE), dateToFind));
-
-        return getTs(pageable, criteriaBuilder, criteriaQuery);
-    }
-
     private Page<T> getTs(Pageable pageable, CriteriaBuilder criteriaBuilder, CriteriaQuery<T> criteriaQuery) {
         List<T> result = getResult(criteriaQuery,
                 (int) pageable.getOffset(),
