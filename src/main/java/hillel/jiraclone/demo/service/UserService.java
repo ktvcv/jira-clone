@@ -2,7 +2,7 @@ package hillel.jiraclone.demo.service;
 
 import hillel.jiraclone.demo.persistence.common.CommonService;
 import hillel.jiraclone.demo.persistence.common.ICommonDao;
-import hillel.jiraclone.demo.persistence.dao.UserDao;
+import hillel.jiraclone.demo.persistence.repos.UserRepo;
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.User;
 import hillel.jiraclone.demo.persistence.util.CipheringService;
@@ -16,14 +16,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class UserService extends CommonService<User, Integer> implements IUserService {
-
-    private final UserDao userDao;
+public class UserService extends CommonService<User, UserRepo> implements IUserService {
 
     @Autowired
-    public UserService(@Qualifier("userDao") ICommonDao<User, Integer> iDao) {
-        super(iDao);
-        this.userDao = (UserDao) iDao;
+    public UserService(UserRepo repository) {
+        super(repository);
     }
 
     @Transactional

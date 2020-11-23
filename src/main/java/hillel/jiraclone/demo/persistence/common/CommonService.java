@@ -1,59 +1,49 @@
 package hillel.jiraclone.demo.persistence.common;
 
-import org.springframework.stereotype.Service;
+import hillel.jiraclone.demo.persistence.repos.CommentRepo;
+import hillel.jiraclone.demo.persistence.repos.CommonRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-public abstract class CommonService<T extends CommonEntity, K>
-                implements ICommonService<T, K>{
+public abstract class CommonService<T extends CommonEntity, P extends CommonRepo<T, Integer>>
+                                        implements ICommonService<T, Integer>{
 
-    private ICommonDao<T, K> iDao;
+    protected final P repository;
 
-    public CommonService(ICommonDao<T, K> iDao) {
-        this.iDao = iDao;
-    }
-
-    public CommonService() {
+    public CommonService(P repository) {
+        this.repository = repository;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void saveOrUpdate(T entity) {
-        if(entity.isNew())
-            iDao.save(entity);
-        else iDao.update(entity);
+        repository.save(entity);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<T> getAll() {
-        return iDao.getAll();
+        return repository.findAll();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public T get(K id) {
-        return iDao.find(id);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public T add(T entity) {
-       return iDao.save(entity);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void update(T entity) {
-        iDao.update(entity);
+    public T get(Integer id) {
+        return repository.getOne(id);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void remove(T entity) {
-        iDao.remove(entity);
+        repository.delete(entity);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void removeAll(){
+        repository.deleteAll();
+    }
+
 }

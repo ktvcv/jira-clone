@@ -133,6 +133,9 @@ public class User extends CommonEntity {
         this.fullname = fullname;
     }
 
+    public void addProject(Project project){
+        this.getProjects().add(project);
+    }
     @Override
     public String toString() {
         return "User{" +

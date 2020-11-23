@@ -7,7 +7,5 @@ public interface ICommonService<T extends CommonEntity, K> {
     void saveOrUpdate(T entity);
     List<T> getAll();
     T get(K id);
-    T add(T entity);
-    void update(T entity);
     void remove(T entity);
 }
