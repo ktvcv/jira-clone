@@ -6,13 +6,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepo extends CommonRepo<User, Integer> {
+public interface UserRepo extends CommonRepo<User> {
 
     User getUserByEmail(String email);
 
     User getUserByName(String email);
 
-    List<User> getParticipantsInProject(Integer projectId);
-
-    List<User> getParticipantsInProjectAndTheirTasks(Integer projectId);
+//    List<User> getParticipantsInProject(Integer projectId);
+//
+//    List<User> getParticipantsInProjectAndTheirTasks(Integer projectId);
 }

@@ -3,17 +3,17 @@ package hillel.jiraclone.demo.persistence.common;
 import hillel.jiraclone.demo.persistence.repos.CommentRepo;
 import hillel.jiraclone.demo.persistence.repos.CommonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public abstract class CommonService<T extends CommonEntity, P extends CommonRepo<T, Integer>>
-                                        implements ICommonService<T, Integer>{
+public abstract class CommonService<T extends CommonEntity> implements ICommonService<T>{
 
-    protected final P repository;
+    private final CommonRepo<T> repository;
 
-    public CommonService(P repository) {
+    public CommonService(CommonRepo<T> repository) {
         this.repository = repository;
     }
 

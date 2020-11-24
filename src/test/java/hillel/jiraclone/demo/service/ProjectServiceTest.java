@@ -12,8 +12,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RunWith(MockitoJUnitRunner.class)
 class ProjectServiceTest {
-
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/default_beans.xml");
+
 
     @BeforeEach
     void setUp() {
@@ -35,9 +35,11 @@ class ProjectServiceTest {
         Project project1 = new Project();
         project1.setTitle("title1");
 
-        //user1.addProject(project1);
+        user1.addProject(project1);
 
         project1.setUser(user1);
+        userService.saveOrUpdate(user1);
+        userService.saveOrUpdate(user2);
 
 
 

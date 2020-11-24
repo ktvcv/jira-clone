@@ -4,6 +4,6 @@ import hillel.jiraclone.demo.persistence.entity.Backlog;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BackLogRepo extends CommonRepo<Backlog, Integer> {
+public interface BackLogRepo extends CommonRepo<Backlog> {
 
 }

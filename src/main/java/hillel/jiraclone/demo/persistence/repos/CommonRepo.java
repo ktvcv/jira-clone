@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface CommonRepo<T extends CommonEntity, K>
-        extends JpaRepository<T, K>, JpaSpecificationExecutor<T> {
+public interface CommonRepo<T extends CommonEntity>
+        extends JpaRepository<T, Integer>, JpaSpecificationExecutor<T> {
 }

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommentService extends CommonService<Comment, CommentRepo> {
+public class CommentService extends CommonService<Comment> {
 
     @Autowired
     public CommentService(CommentRepo repository) {

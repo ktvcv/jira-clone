@@ -1,12 +1,11 @@
 package hillel.jiraclone.demo.service.interfaces;
 
-import hillel.jiraclone.demo.persistence.common.ICommonDao;
 import hillel.jiraclone.demo.persistence.common.ICommonService;
 import hillel.jiraclone.demo.persistence.entity.User;
 
 import java.util.List;
 
-public interface IUserService extends ICommonService<User, Integer> {
+public interface IUserService extends ICommonService<User> {
 
     User getUserByEmail(String email);
     User getUserByName(String email);

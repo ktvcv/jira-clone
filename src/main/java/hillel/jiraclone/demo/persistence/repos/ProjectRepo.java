@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public interface ProjectRepo extends CommonRepo<Project, Integer> {
+public interface ProjectRepo extends CommonRepo<Project> {
 
 //    @PersistenceContext
 //    private EntityManager entityManager;

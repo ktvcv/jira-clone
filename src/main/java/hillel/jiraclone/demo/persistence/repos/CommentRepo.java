@@ -4,5 +4,5 @@ import hillel.jiraclone.demo.persistence.entity.Comment;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CommentRepo extends CommonRepo<Comment, Integer> {
+public interface CommentRepo extends CommonRepo<Comment> {
 }

@@ -1,14 +1,12 @@
 package hillel.jiraclone.demo.service;
 
 import hillel.jiraclone.demo.persistence.common.CommonService;
-import hillel.jiraclone.demo.persistence.common.ICommonDao;
 import hillel.jiraclone.demo.persistence.repos.UserRepo;
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.User;
 import hillel.jiraclone.demo.persistence.util.CipheringService;
 import hillel.jiraclone.demo.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class UserService extends CommonService<User, UserRepo> implements IUserService {
+public class UserService extends CommonService<User> implements IUserService {
 
     @Autowired
     public UserService(UserRepo repository) {
