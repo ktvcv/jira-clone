@@ -14,9 +14,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class UserService extends CommonService<User> implements IUserService {
+public class UserService extends CommonService<User, UserRepo> implements IUserService {
 
-    @Autowired
     public UserService(UserRepo repository) {
         super(repository);
     }
@@ -48,8 +47,8 @@ public class UserService extends CommonService<User> implements IUserService {
     }
 
     @Override
-    public User getUserByName(String email) {
-        return null;
+    public User getUserByName(String name) {
+        return repository.getUserByName(name);
     }
 
     @Override
@@ -72,4 +71,6 @@ public class UserService extends CommonService<User> implements IUserService {
         list.add(project);
         user.setProjects(list);
     }
-}
+
+    }
+

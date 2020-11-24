@@ -7,7 +7,7 @@ import hillel.jiraclone.demo.service.interfaces.IProjectService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProjectService extends CommonService<Project> implements IProjectService {
+public class ProjectService extends CommonService<Project, ProjectRepo> implements IProjectService {
 
     public ProjectService(ProjectRepo repository) {
         super(repository);

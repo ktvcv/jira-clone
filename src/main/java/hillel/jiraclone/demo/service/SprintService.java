@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SprintService extends CommonService<Sprint> implements ISprintService {
+public class SprintService extends CommonService<Sprint, SprintRepo> implements ISprintService {
 
-    @Autowired
     public SprintService(SprintRepo repository) {
         super(repository);
     }

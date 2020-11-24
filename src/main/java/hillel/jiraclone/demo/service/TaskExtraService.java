@@ -7,8 +7,7 @@ import hillel.jiraclone.demo.service.interfaces.ITaskExtraInfoService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TaskExtraService extends CommonService<TaskExtraInfo> implements ITaskExtraInfoService {
-
+public class TaskExtraService extends CommonService<TaskExtraInfo, TaskExtraInfoRepo> implements ITaskExtraInfoService {
     public TaskExtraService(TaskExtraInfoRepo repository) {
         super(repository);
     }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TaskService extends CommonService<Task> implements ITaskService {
+public class TaskService extends CommonService<Task, TaskRepo> implements ITaskService {
 
     public TaskService(TaskRepo repository) {
         super(repository);

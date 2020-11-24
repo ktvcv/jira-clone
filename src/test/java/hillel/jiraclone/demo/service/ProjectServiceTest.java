@@ -3,6 +3,7 @@ package hillel.jiraclone.demo.service;
 import hillel.jiraclone.demo.persistence.entity.Backlog;
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.User;
+import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
@@ -14,14 +15,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 class ProjectServiceTest {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/default_beans.xml");
 
+    UserService userService = applicationContext.getBean(UserService.class);
+    ProjectService projectService = applicationContext.getBean(ProjectService.class);
+    SprintService sprintService = applicationContext.getBean(SprintService.class);
+    BacklogService backlogService = applicationContext.getBean(BacklogService.class);
+
 
     @BeforeEach
     void setUp() {
-        UserService userService = applicationContext.getBean(UserService.class);
-        ProjectService projectService = applicationContext.getBean(ProjectService.class);
-        SprintService sprintService = applicationContext.getBean(SprintService.class);
-        BacklogService backlogService = applicationContext.getBean(BacklogService.class);
-
         User user1 = new User();
         user1.setName("name1");
         user1.setPassword("pass1");
@@ -48,6 +49,12 @@ class ProjectServiceTest {
 
     @AfterEach
     void tearDown() {
+        userService.removeAll();
     }
 
+    @Test
+    public void testUserCRUDMethods() {
+
+
+    }
 }

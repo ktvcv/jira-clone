@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public abstract class CommonService<T extends CommonEntity> implements ICommonService<T>{
+public abstract class CommonService<T extends CommonEntity, R extends CommonRepo<T>> implements ICommonService<T>{
 
-    private final CommonRepo<T> repository;
+    protected final R repository;
 
-    public CommonService(CommonRepo<T> repository) {
+    public CommonService(R repository) {
         this.repository = repository;
     }
 
