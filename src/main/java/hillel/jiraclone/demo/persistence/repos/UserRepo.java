@@ -1,12 +1,12 @@
 package hillel.jiraclone.demo.persistence.repos;
 
 import hillel.jiraclone.demo.persistence.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface UserRepo extends CommonRepo<User> {
+public interface UserRepo extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
 
     User getUserByEmail(String email);
 

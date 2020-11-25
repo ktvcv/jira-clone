@@ -1,23 +1,19 @@
 package hillel.jiraclone.demo.service;
 
-import hillel.jiraclone.demo.persistence.entity.Backlog;
-import org.junit.*;
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.User;
-import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
+public class UserServiceTest {
 
-class ProjectServiceTest {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/default_beans.xml");
 
     UserService userService = applicationContext.getBean(UserService.class);

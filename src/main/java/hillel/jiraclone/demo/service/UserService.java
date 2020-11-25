@@ -1,76 +1,94 @@
 package hillel.jiraclone.demo.service;
 
-import hillel.jiraclone.demo.persistence.common.CommonService;
-import hillel.jiraclone.demo.persistence.repos.UserRepo;
-import hillel.jiraclone.demo.persistence.entity.Project;
+import hillel.jiraclone.demo.persistence.common.ICommonService;
 import hillel.jiraclone.demo.persistence.entity.User;
-import hillel.jiraclone.demo.persistence.util.CipheringService;
-import hillel.jiraclone.demo.service.interfaces.IUserService;
+import hillel.jiraclone.demo.persistence.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
-public class UserService extends CommonService<User, UserRepo> implements IUserService {
+public class UserService  implements ICommonService<User> {
 
-    public UserService(UserRepo repository) {
-        super(repository);
-    }
+    private final UserRepo userRepo;
 
-    @Transactional
-    public boolean changePassword(final User user, final String newPassword) {
-        user.setPassword(newPassword);
-        return true;
-    }
-
-    public boolean checkIfValidNewPassword(final String newPassword, final String confirmPassword) {
-        return newPassword.equals(confirmPassword);
-    }
-
-    public boolean checkIfValidOldPassword(final User user, final String confirmPassword) {
-
-        return (Objects.equals(CipheringService.decrypt(user.getPassword()), confirmPassword));
-
-    }
-
-    public String getUser(final User userFromDB) {
-        return userFromDB.getName() +
-                userFromDB.getEmail();
+    @Autowired
+    public UserService(final UserRepo userRepo) {
+        this.userRepo = userRepo;
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public void saveOrUpdate(User entity) {
+
+    }
+
+    @Override
+    public List<User> getAll() {
         return null;
     }
 
     @Override
-    public User getUserByName(String name) {
-        return repository.getUserByName(name);
-    }
-
-    @Override
-    public List<User> getParticipantsInProject(Integer projectId) {
+    public User get(Integer id) {
         return null;
     }
 
     @Override
-    public List<User> getParticipantsInProjectAndTheirTasks(Integer projectId) {
-        return null;
+    public void remove(User entity) {
+
     }
 
-    @Override
-    public User getAllUsersTasksInProject(Integer userId, Integer projectId) {
-        return null;
-    }
-
-    public void addProject(User user, Project project){
-        List<Project> list = user.getProjects();
-        list.add(project);
-        user.setProjects(list);
-    }
+    //    @Transactional
+//    public boolean changePassword(final User user, final String newPassword) {
+//        user.setPassword(newPassword);
+//        return true;
+//    }
+//
+//    public boolean checkIfValidNewPassword(final String newPassword, final String confirmPassword) {
+//        return newPassword.equals(confirmPassword);
+//    }
+//
+//    public boolean checkIfValidOldPassword(final User user, final String confirmPassword) {
+//
+//        return (Objects.equals(CipheringService.decrypt(user.getPassword()), confirmPassword));
+//
+//    }
+//
+//    public String getUser(final User userFromDB) {
+//        return userFromDB.getName() +
+//                userFromDB.getEmail();
+//    }
+//
+//    @Override
+//    public User getUserByEmail(String email) {
+//        return null;
+//    }
+//
+//    @Override
+//    public User getUserByName(String name) {
+//        return userRepo.getUserByName(name);
+//    }
+//
+//    @Override
+//    public List<User> getParticipantsInProject(Integer projectId) {
+//        return null;
+//    }
+//
+//    @Override
+//    public List<User> getParticipantsInProjectAndTheirTasks(Integer projectId) {
+//        return null;
+//    }
+//
+//    @Override
+//    public User getAllUsersTasksInProject(Integer userId, Integer projectId) {
+//        return null;
+//    }
+//
+//    public void addProject(User user, Project project){
+//        List<Project> list = user.getProjects();
+//        list.add(project);
+//        user.setProjects(list);
+//    }
 
     }
 
