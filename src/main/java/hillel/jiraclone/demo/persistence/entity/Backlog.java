@@ -29,7 +29,6 @@ public class Backlog extends CommonEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Backlog backlog = (Backlog) o;
         return getId() != null && getId().equals(backlog.getId()) &&

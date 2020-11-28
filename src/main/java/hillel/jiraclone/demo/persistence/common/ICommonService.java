@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ICommonService<T extends CommonEntity> {
 
-    void saveOrUpdate(T entity);
+    T saveOrUpdate(T entity);
     List<T> getAll();
     T get(Integer id);
     void remove(T entity);

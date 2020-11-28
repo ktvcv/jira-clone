@@ -52,7 +52,6 @@ public class Comment extends CommonEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
         return getId() != null && getId().equals(comment.getId()) &&

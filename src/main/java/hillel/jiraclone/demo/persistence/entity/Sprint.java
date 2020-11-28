@@ -35,7 +35,6 @@ public class Sprint extends CommonEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sprint sprint = (Sprint) o;
         return getId() != null && getId().equals(sprint.getId()) &&
