@@ -1,16 +1,10 @@
 package hillel.jiraclone.demo.service;
 
-import hillel.jiraclone.demo.persistence.entity.Backlog;
-import org.junit.*;
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.User;
-import org.junit.Assert;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -48,13 +42,29 @@ class ProjectServiceTest {
 //        userService.saveOrUpdate(user2);
     }
 
-//    @AfterEach
-//    void tearDown() {
-//        userService.removeAll();
-//    }
-//
-//    @Test
-//    public void testUserCRUDMethods() {
-//        assertEquals(2, userService.getAll().size());
-//    }
+    @AfterEach
+    void tearDown() {
+    }
+
+    @Test
+    public void testUserProjectNumber() {
+        assertEquals(2, userService.getAll().size());
+    }
+
+    @Test
+    public void testBackLogProjectRelation() {
+        assertEquals(2, userService.getAll().size());
+    }
+
+    @Test
+    public void testProjectParticipants() {
+        assertEquals(2, userService.getAll().size());
+    }
+
+    @Test
+    public void testProjectParticipantsAfterDelete() {
+        assertEquals(2, userService.getAll().size());
+    }
+
+
 }
