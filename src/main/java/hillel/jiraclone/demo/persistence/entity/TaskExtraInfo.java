@@ -28,7 +28,6 @@ public class TaskExtraInfo extends CommonEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskExtraInfo that = (TaskExtraInfo) o;
         return getId() != null && getId().equals(that.getId()) &&

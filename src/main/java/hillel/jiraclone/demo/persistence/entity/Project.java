@@ -42,7 +42,6 @@ public class Project extends CommonEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
         return getId() != null && getId().equals(project.getId()) &&

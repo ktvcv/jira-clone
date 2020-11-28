@@ -51,7 +51,6 @@ public class User extends CommonEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return getId() != null && getId().equals(user.getId()) &&
@@ -133,6 +132,9 @@ public class User extends CommonEntity {
         this.fullname = fullname;
     }
 
+    public void addProject(Project project){
+        this.getProjects().add(project);
+    }
     @Override
     public String toString() {
         return "User{" +

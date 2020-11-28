@@ -1,22 +1,41 @@
 package hillel.jiraclone.demo.service;
 
-import hillel.jiraclone.demo.persistence.common.CommonService;
-import hillel.jiraclone.demo.persistence.common.ICommonDao;
-import hillel.jiraclone.demo.persistence.dao.BackLogDao;
+
+import hillel.jiraclone.demo.persistence.common.ICommonService;
 import hillel.jiraclone.demo.persistence.entity.Backlog;
-import hillel.jiraclone.demo.service.interfaces.IBacklogService;
+import hillel.jiraclone.demo.persistence.repos.BacklogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Service
-public class BacklogService extends CommonService<Backlog, Integer> implements IBacklogService {
+import java.util.List;
 
-    private final BackLogDao backlogDao;
+@Service
+public class BacklogService implements ICommonService<Backlog> {
+
+    private final BacklogRepo backlogRepo;
 
     @Autowired
-    public BacklogService(@Qualifier("backLogDao") ICommonDao<Backlog, Integer> iDao) {
-        super(iDao);
-        this.backlogDao = (BackLogDao) iDao;
+    public BacklogService(BacklogRepo backlogRepo) {
+        this.backlogRepo = backlogRepo;
+    }
+
+    @Override
+    public Backlog saveOrUpdate(Backlog entity) {
+        return backlogRepo.save(entity);
+    }
+
+    @Override
+    public List<Backlog> getAll() {
+        return backlogRepo.findAll();
+    }
+
+    @Override
+    public Backlog get(Integer id) {
+        return backlogRepo.getOne(id);
+    }
+
+    @Override
+    public void remove(Backlog entity) {
+        backlogRepo.delete(entity);
     }
 }

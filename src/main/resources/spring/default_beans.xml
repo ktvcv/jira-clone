@@ -4,15 +4,17 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="
-        http://www.springframework.org/schema/beans
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <!--<context:annotation-config/>-->
 
@@ -32,6 +34,7 @@
         <constructor-arg ref="hikariConfig"/>
     </bean>
 
+
     <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter">
@@ -43,6 +46,7 @@
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</prop>
                 <prop key="hibernate.hbm2ddl.auto">validate</prop>
                 <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.WeblogicJtaPlatform</prop>
 
             </props>
         </property>
@@ -52,7 +56,8 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <jpa:repositories base-package="hillel.jiraclone.demo.persistence.repos" entity-manager-factory-ref="emf" consider-nested-repositories="true" />
     <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <context:component-scan base-package="hillel.jiraclone.demo"/>
+    <context:component-scan base-package="hillel.jiraclone.demo">
+    </context:component-scan>
 </beans>

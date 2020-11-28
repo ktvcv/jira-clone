@@ -1,25 +1,41 @@
 package hillel.jiraclone.demo.service;
 
-import hillel.jiraclone.demo.persistence.common.CommonService;
-import hillel.jiraclone.demo.persistence.common.ICommonDao;
-import hillel.jiraclone.demo.persistence.dao.CommentDao;
-import hillel.jiraclone.demo.persistence.dao.TaskExtraInfoDao;
-import hillel.jiraclone.demo.persistence.entity.Comment;
+import hillel.jiraclone.demo.persistence.common.ICommonService;
+import hillel.jiraclone.demo.persistence.entity.Task;
 import hillel.jiraclone.demo.persistence.entity.TaskExtraInfo;
-import hillel.jiraclone.demo.service.interfaces.ICommentService;
-import hillel.jiraclone.demo.service.interfaces.ITaskExtraInfoService;
+import hillel.jiraclone.demo.persistence.repos.TaskExtraInfoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Service
-public class TaskExtraService extends CommonService<TaskExtraInfo, Integer> implements ITaskExtraInfoService {
+import java.util.List;
 
-    private final TaskExtraInfoDao taskExtraInfoDao;
+@Service
+public class TaskExtraService implements ICommonService<TaskExtraInfo> {
+
+    private TaskExtraInfoRepo taskExtraInfoRepo;
 
     @Autowired
-    public TaskExtraService(@Qualifier("taskExtraInfoDao") ICommonDao<TaskExtraInfo, Integer> iDao) {
-        super(iDao);
-        this.taskExtraInfoDao = (TaskExtraInfoDao) iDao;
+    public TaskExtraService(TaskExtraInfoRepo taskExtraInfoRepo) {
+        this.taskExtraInfoRepo = taskExtraInfoRepo;
+    }
+
+    @Override
+    public TaskExtraInfo saveOrUpdate(TaskExtraInfo entity) {
+        return taskExtraInfoRepo.save(entity);
+    }
+
+    @Override
+    public List<TaskExtraInfo> getAll() {
+        return taskExtraInfoRepo.findAll();
+    }
+
+    @Override
+    public TaskExtraInfo get(Integer id) {
+        return taskExtraInfoRepo.getOne(id);
+    }
+
+    @Override
+    public void remove(TaskExtraInfo entity) {
+        taskExtraInfoRepo.delete(entity);
     }
 }

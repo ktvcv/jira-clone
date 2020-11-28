@@ -1,56 +1,42 @@
 package hillel.jiraclone.demo.service;
 
-import hillel.jiraclone.demo.persistence.common.CommonService;
-import hillel.jiraclone.demo.persistence.common.ICommonDao;
-import hillel.jiraclone.demo.persistence.dao.TaskDao;
-import hillel.jiraclone.demo.persistence.dao.UserDao;
+import hillel.jiraclone.demo.persistence.common.ICommonService;
 import hillel.jiraclone.demo.persistence.entity.Task;
 import hillel.jiraclone.demo.persistence.entity.User;
-import hillel.jiraclone.demo.service.interfaces.ITaskService;
+import hillel.jiraclone.demo.persistence.repos.TaskRepo;
+import hillel.jiraclone.demo.persistence.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TaskService extends CommonService<Task, Integer> implements ITaskService {
+public class TaskService implements ICommonService<Task> {
 
-    private final TaskDao taskDao;
+    private final TaskRepo taskRepo;
 
     @Autowired
-    public TaskService(@Qualifier("taskDao") ICommonDao<Task, Integer> iDao) {
-        super(iDao);
-        this.taskDao = (TaskDao) iDao;
+    public TaskService(final TaskRepo taskRepo) {
+        this.taskRepo = taskRepo;
     }
 
     @Override
-    public List<Task> getAllTasksInProject(Integer projectId) {
+    public void saveOrUpdate(Task entity) {
+
+    }
+
+    @Override
+    public List<Task> getAll() {
         return null;
     }
 
     @Override
-    public List<Task> getAllOpenedTasksInProject(Integer projectId) {
+    public Task get(Integer id) {
         return null;
     }
 
     @Override
-    public List<Task> getAllTodoTasksInProject(Integer projectId) {
-        return null;
-    }
+    public void remove(Task entity) {
 
-    @Override
-    public List<Task> getAllToBeApprovedTasksInProject(Integer projectId) {
-        return null;
-    }
-
-    @Override
-    public List<Task> getAllBugsTasksInProject(Integer projectId) {
-        return null;
-    }
-
-    @Override
-    public List<Task> getAllFeatureTasksInProject(Integer projectId) {
-        return null;
     }
 }

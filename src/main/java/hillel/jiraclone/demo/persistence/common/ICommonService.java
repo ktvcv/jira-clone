@@ -2,12 +2,10 @@ package hillel.jiraclone.demo.persistence.common;
 
 import java.util.List;
 
-public interface ICommonService<T extends CommonEntity, K> {
+public interface ICommonService<T extends CommonEntity> {
 
-    void saveOrUpdate(T entity);
+    T saveOrUpdate(T entity);
     List<T> getAll();
-    T get(K id);
-    T add(T entity);
-    void update(T entity);
+    T get(Integer id);
     void remove(T entity);
 }

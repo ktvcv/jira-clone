@@ -1,14 +1,11 @@
 package hillel.jiraclone.demo.service;
 
-import hillel.jiraclone.demo.persistence.common.CommonService;
-import hillel.jiraclone.demo.persistence.common.ICommonDao;
-import hillel.jiraclone.demo.persistence.dao.UserDao;
+import hillel.jiraclone.demo.persistence.common.ICommonService;
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.User;
+import hillel.jiraclone.demo.persistence.repos.UserRepo;
 import hillel.jiraclone.demo.persistence.util.CipheringService;
-import hillel.jiraclone.demo.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +13,33 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class UserService extends CommonService<User, Integer> implements IUserService {
+public class UserService  implements ICommonService<User> {
 
-    private final UserDao userDao;
+    private final UserRepo userRepo;
 
     @Autowired
-    public UserService(@Qualifier("userDao") ICommonDao<User, Integer> iDao) {
-        super(iDao);
-        this.userDao = (UserDao) iDao;
+    public UserService(final UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
+
+    @Override
+    public void saveOrUpdate(User entity) {
+        userRepo.save(entity);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userRepo.findAll();
+    }
+
+    @Override
+    public User get(Integer id) {
+        return userRepo.getOne(id);
+    }
+
+    @Override
+    public void remove(User entity) {
+        userRepo.delete(entity);
     }
 
     @Transactional
@@ -47,27 +63,23 @@ public class UserService extends CommonService<User, Integer> implements IUserSe
                 userFromDB.getEmail();
     }
 
-    @Override
     public User getUserByEmail(String email) {
         return null;
     }
 
-    @Override
-    public User getUserByName(String email) {
-        return null;
+    public User getUserByName(String name) {
+        //return userRepo.getUserByName(name);
+        return new User();
     }
 
-    @Override
     public List<User> getParticipantsInProject(Integer projectId) {
         return null;
     }
 
-    @Override
     public List<User> getParticipantsInProjectAndTheirTasks(Integer projectId) {
         return null;
     }
 
-    @Override
     public User getAllUsersTasksInProject(Integer userId, Integer projectId) {
         return null;
     }
@@ -77,4 +89,6 @@ public class UserService extends CommonService<User, Integer> implements IUserSe
         list.add(project);
         user.setProjects(list);
     }
-}
+
+    }
+
