@@ -1,7 +1,10 @@
 package hillel.jiraclone.demo.persistence.repos;
 
 import hillel.jiraclone.demo.persistence.entity.Sprint;
-import hillel.jiraclone.demo.persistence.repos.common.CommonRepo;
+import hillel.jiraclone.demo.persistence.entity.TaskExtraInfo;
+import hillel.jiraclone.demo.service.CommonRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SprintRepo extends CommonRepo<Sprint, Integer> {
+@Repository
+public interface SprintRepo extends CommonRepository<Sprint> {
 }

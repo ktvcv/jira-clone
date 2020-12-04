@@ -4,38 +4,16 @@ import hillel.jiraclone.demo.persistence.common.ICommonService;
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.Task;
 import hillel.jiraclone.demo.persistence.repos.ProjectRepo;
+import hillel.jiraclone.demo.persistence.repos.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProjectService  implements ICommonService<Project> {
+public class ProjectService  extends AbstactService<Project, ProjectRepo>{
 
-    private ProjectRepo projectRepo;
-
-    @Autowired
-    public ProjectService(ProjectRepo projectRepo) {
-        this.projectRepo = projectRepo;
-    }
-
-    @Override
-    public void saveOrUpdate(Project entity) {
-
-    }
-
-    @Override
-    public List<Project> getAll() {
-        return null;
-    }
-
-    @Override
-    public Project get(Integer id) {
-        return null;
-    }
-
-    @Override
-    public void remove(Project entity) {
-
+    public ProjectService(ProjectRepo repository) {
+        super(repository);
     }
 }
