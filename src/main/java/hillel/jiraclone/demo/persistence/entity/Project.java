@@ -3,12 +3,15 @@ package hillel.jiraclone.demo.persistence.entity;
 
 import hillel.jiraclone.demo.persistence.common.CommonEntity;
 import hillel.jiraclone.demo.persistence.entity.projectsHaveParticipants.UsersInProjects;
+import hillel.jiraclone.demo.persistence.enumeration.Affiliation;
+import hillel.jiraclone.demo.persistence.enumeration.Role;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,9 +39,36 @@ public class Project extends CommonEntity {
     @JoinColumn(name = "id")
     private List<Sprint> sprints = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY,orphanRemoval = true)
     @JoinColumn(name = "project_id")
     private List<UsersInProjects> participants = new ArrayList<>();
+
+
+    public void addParticipant(User user, Role role){
+        UsersInProjects newParticipant = new UsersInProjects(this, user, role);
+        participants.add(newParticipant);
+        user.getInProjects().add(newParticipant);
+    }
+
+    public void removeParticipant(User user)
+    {
+        for (Iterator<UsersInProjects> iterator = participants.iterator();
+             iterator.hasNext(); ) {
+            UsersInProjects users = iterator.next();
+
+            if (users.getProject().equals(this) &&
+                    users.getUser().equals(user)) {
+                iterator.remove();
+                users.getProject().getParticipants().remove(users);
+                users.setUser(null);
+                users.setProject(null);
+            }
+        }
+    }
+
+    public void addSprint(Sprint sprint){
+        getSprints().add(sprint);
+    }
 
     @Override
     public boolean equals(Object o) {

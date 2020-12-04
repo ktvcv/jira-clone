@@ -2,11 +2,15 @@ package hillel.jiraclone.demo.service;
 
 import hillel.jiraclone.demo.persistence.entity.Project;
 import hillel.jiraclone.demo.persistence.entity.User;
+import hillel.jiraclone.demo.persistence.entity.User_;
+import hillel.jiraclone.demo.persistence.enumeration.Role;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.domain.PageRequest;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,39 +36,39 @@ class ProjectServiceTest {
         user1.setPassword("pass2");
         user1.setEmail("mail2");
 
+        User user3 = new User();
+        user1.setName("name3");
+        user1.setPassword("pass3");
+        user1.setEmail("mail3");
+
         Project project1 = new Project();
         project1.setTitle("title1");
 
         user1.addProject(project1);
-//
-//        project1.setUser(user1);
-//        userService.saveOrUpdate(user1);
-//        userService.saveOrUpdate(user2);
+
+        userService.saveOrUpdate(user1);
+        userService.saveOrUpdate(user2);
+
+        project1.addParticipant(user2, Role.REGULAR_PARTICIPANT);
+        projectService.saveOrUpdate(project1);
+
     }
 
     @AfterEach
     void tearDown() {
+       userService.removeAll();
     }
 
     @Test
-    public void testUserProjectNumber() {
-        assertEquals(2, userService.getAll().size());
+    void testAllUsersInProject(){
+        Assert.assertEquals(userService.getAllUsersInProject(1, null, PageRequest.of(1, 5)).getSize(), 1);
+
     }
 
     @Test
-    public void testBackLogProjectRelation() {
-        assertEquals(2, userService.getAll().size());
-    }
+    void testAllUsersInProjectWithRole(){
+        Assert.assertEquals(userService.getAllUsersInProject(1, Role.REGULAR_PARTICIPANT, PageRequest.of(1, 5)).getSize(), 1);
 
-    @Test
-    public void testProjectParticipants() {
-        assertEquals(2, userService.getAll().size());
     }
-
-    @Test
-    public void testProjectParticipantsAfterDelete() {
-        assertEquals(2, userService.getAll().size());
-    }
-
 
 }

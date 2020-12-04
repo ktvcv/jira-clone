@@ -44,7 +44,7 @@
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</prop>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.WeblogicJtaPlatform</prop>
 
@@ -56,8 +56,9 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <jpa:repositories base-package="hillel.jiraclone.demo.persistence.repos" entity-manager-factory-ref="emf" consider-nested-repositories="true" />
+    <jpa:repositories base-package="hillel.jiraclone.demo.persistence.repos" entity-manager-factory-ref="emf" />
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <context:component-scan base-package="hillel.jiraclone.demo">
+
     </context:component-scan>
 </beans>

@@ -38,11 +38,11 @@ public class User extends CommonEntity {
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "participant_id")
-    private List<UsersInProjects> inProjects;
+    private List<UsersInProjects> inProjects  = new ArrayList<>();;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private List<UsersWithTasks> tasks;
+    private List<UsersWithTasks> tasks  = new ArrayList<>();;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
