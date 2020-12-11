@@ -40,7 +40,7 @@ public class UserServiceTest {
         user1.addProject(project1);
 
         project1.setUser(user1);
-        userService.save(user1);
+       // userService.save(user1);
 //        userService.saveOrUpdate(user2);
     }
 

@@ -69,13 +69,18 @@ public class Task extends CommonEntity {
         Task task = (Task) o;
         return getId() != null && getId().equals(task.getId());
     }
-
     public TaskExtraInfo getTaskExtraInfo() {
         return taskExtraInfo;
     }
 
     public void setTaskExtraInfo(TaskExtraInfo taskExtraInfo) {
         this.taskExtraInfo = taskExtraInfo;
+        taskExtraInfo.setTask(this);
+    }
+
+    public void addComment(Comment comment){
+        this.getComments().add(comment);
+        comment.setTask(this);
     }
 
     @Override

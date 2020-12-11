@@ -37,6 +37,11 @@ public class User extends CommonEntity {
     private List<Project> projects = new ArrayList<>();
 
     @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private List<History> histories = new ArrayList<>();
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "participant_id")
     private List<UsersInProjects> inProjects  = new ArrayList<>();;
 

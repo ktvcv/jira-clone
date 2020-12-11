@@ -35,10 +35,12 @@ public class Sprint extends CommonEntity {
 
     public void addTask(Task task){
         getTasks().add(task);
+        task.setSprint(this);
     }
 
     public Task removeTask(Task task){
         getTasks().remove(task);
+        task.setSprint(null);
         return task;
     }
 

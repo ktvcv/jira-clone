@@ -10,7 +10,7 @@ public abstract class CommonEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_name")
     private Integer id;
 
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", updatable = false)
     @Convert(converter = CustomLongTimeConverter.class)
     private Long creationDate;
 

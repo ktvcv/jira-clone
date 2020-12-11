@@ -68,6 +68,7 @@ public class Project extends CommonEntity {
 
     public void addSprint(Sprint sprint){
         getSprints().add(sprint);
+        sprint.setProject(this);
     }
 
     @Override
@@ -92,6 +93,7 @@ public class Project extends CommonEntity {
 
     public void setBacklog(Backlog backlog) {
         this.backlog = backlog;
+        backlog.setProject(this);
     }
 
     public List<Sprint> getSprints() {
