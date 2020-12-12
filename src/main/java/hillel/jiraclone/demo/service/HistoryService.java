@@ -2,16 +2,18 @@ package hillel.jiraclone.demo.service;
 
 import hillel.jiraclone.demo.persistence.entity.History;
 import hillel.jiraclone.demo.persistence.entity.HistoryDetails;
-import hillel.jiraclone.demo.persistence.enumeration.Level;
 import hillel.jiraclone.demo.persistence.entity.User;
+import hillel.jiraclone.demo.persistence.enumeration.Level;
 import hillel.jiraclone.demo.persistence.repos.HistoryDetailRepo;
 import hillel.jiraclone.demo.persistence.repos.HistoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Calendar;
+import java.util.Objects;
 
 @Service
 public class HistoryService {
@@ -25,7 +27,7 @@ public class HistoryService {
     }
 
     @Transactional
-    public void writeHistoryAction(User user, Level level, String action, String result){
+    public void writeHistoryAction(User user, Level level, String action, String result) {
 
         History history = new History();
         history.setUser(user);
@@ -45,7 +47,18 @@ public class HistoryService {
         historyRepo.save(history);
     }
 
-    public List<History> getAll(Pageable pageable){
-       return historyRepo.findAllWhereDeleteDateIsNull(pageable);
+    public Page<History> getAll(Pageable pageable) {
+        Objects.requireNonNull(pageable, "Pageable can't be null");
+
+        Page<History> historyPage = historyRepo.findAllWhereDeleteDateIsNull(pageable);
+
+        if (historyPage.hasContent())
+            return historyPage;
+
+        return Page.empty();
+    }
+
+    public void softDelete(Calendar calendar) {
+        historyRepo.softDeleteHistory(calendar);
     }
 }

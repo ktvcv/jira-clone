@@ -5,7 +5,9 @@ import hillel.jiraclone.demo.persistence.repos.TaskExtraInfoRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TaskExtraService {
@@ -17,7 +19,7 @@ public class TaskExtraService {
     }
 
     public TaskExtraInfo saveOrUpdate(TaskExtraInfo entity) {
-        Assert.notNull(entity, "You have pass nullable object");
+        Objects.requireNonNull(entity, "You have pass nullable object");
         return repository.save(entity);
     }
 
@@ -26,12 +28,12 @@ public class TaskExtraService {
     }
 
     public TaskExtraInfo get(Integer id) {
-        Assert.notNull(id, "Id can not be null");
-        return repository.getOne(id);
+        Objects.requireNonNull(id, "Id can not be null");
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public void remove(TaskExtraInfo entity) {
-        Assert.notNull(entity, "You have pass nullable object");
+        Objects.requireNonNull(entity, "You have pass nullable object");
         repository.delete(entity);
     }
 

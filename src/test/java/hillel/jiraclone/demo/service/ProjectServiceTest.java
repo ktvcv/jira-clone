@@ -6,6 +6,7 @@ import hillel.jiraclone.demo.persistence.entity.User_;
 import hillel.jiraclone.demo.persistence.enumeration.Role;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -32,25 +33,27 @@ class ProjectServiceTest {
         user1.setEmail("mail1");
 
         User user2 = new User();
-        user1.setName("name2");
-        user1.setPassword("pass2");
-        user1.setEmail("mail2");
+        user2.setName("name2");
+        user2.setPassword("pass2");
+        user2.setEmail("mail2");
 
         User user3 = new User();
-        user1.setName("name3");
-        user1.setPassword("pass3");
-        user1.setEmail("mail3");
+        user3.setName("name3");
+        user3.setPassword("pass3");
+        user3.setEmail("mail3");
+
+        userService.saveOrUpdate(user1);
+        userService.saveOrUpdate(user2);
 
         Project project1 = new Project();
         project1.setTitle("title1");
 
-  //      user1.addProject(project1);
+        user1.addProject(project1);
 
-//        userService.saveOrUpdate(user1);
-//        userService.saveOrUpdate(user2);
-//
-//        project1.addParticipant(user2, Role.REGULAR_PARTICIPANT);
-//        projectService.saveOrUpdate(project1);
+        userService.saveOrUpdate(user1);
+
+        project1.addParticipant(user2, Role.REGULAR_PARTICIPANT);
+        projectService.saveOrUpdate(project1);
 
     }
 
@@ -61,13 +64,13 @@ class ProjectServiceTest {
 
     @Test
     void testAllUsersInProject(){
-        //Assert.assertEquals(userService.getAllUsersInProject(1, null, PageRequest.of(1, 5)).getSize(), 1);
+        Assertions.assertEquals(userService.getAllUsersInProject(1, null, PageRequest.of(1, 5)).getSize(), 1);
 
     }
 
     @Test
     void testAllUsersInProjectWithRole(){
-       // Assert.assertEquals(userService.getAllUsersInProject(1, Role.REGULAR_PARTICIPANT, PageRequest.of(1, 5)).getSize(), 1);
+        Assertions.assertEquals(userService.getAllUsersInProject(1, Role.REGULAR_PARTICIPANT, PageRequest.of(1, 5)).getSize(), 1);
 
     }
 

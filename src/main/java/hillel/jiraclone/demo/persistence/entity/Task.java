@@ -78,9 +78,10 @@ public class Task extends CommonEntity {
         taskExtraInfo.setTask(this);
     }
 
-    public void addComment(Comment comment){
+    public void addComment(Comment comment, User user){
         this.getComments().add(comment);
         comment.setTask(this);
+        comment.setUser(user);
     }
 
     @Override

@@ -1,8 +1,6 @@
 package hillel.jiraclone.demo.service;
 
-import hillel.jiraclone.demo.persistence.entity.Backlog;
 import hillel.jiraclone.demo.persistence.entity.Comment;
-import hillel.jiraclone.demo.persistence.repos.BacklogRepo;
 import hillel.jiraclone.demo.persistence.repos.CommentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +37,7 @@ public class CommentService {
         repository.delete(entity);
     }
 
-    public void removeAll(){
+    public void removeAll() {
         repository.deleteAll();
     }
 }
