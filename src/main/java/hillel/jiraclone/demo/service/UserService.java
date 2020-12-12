@@ -1,94 +1,102 @@
 package hillel.jiraclone.demo.service;
 
 import hillel.jiraclone.demo.persistence.entity.User;
+import hillel.jiraclone.demo.persistence.enumeration.Affiliation;
+import hillel.jiraclone.demo.persistence.enumeration.Role;
 import hillel.jiraclone.demo.persistence.repos.UserRepo;
+import hillel.jiraclone.demo.persistence.util.CipheringService;
+import hillel.jiraclone.demo.specification.UserSpec;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Objects;
 
 @Service
-public class UserService extends AbstactService<User, UserRepo> {
+public class UserService {
 
-    public UserService(UserRepo repository) {
-        super(repository);
+    private final UserRepo repository;
+
+    public UserService(UserRepo userRepo) {
+        this.repository = userRepo;
+    }
+
+    @Transactional
+    public User saveOrUpdate(User entity) {
+        Objects.requireNonNull(entity, "You have pass nullable object");
+        return repository.save(entity);
+    }
+
+    public List<User> getAll() {
+        return repository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public User get(Integer id) {
+        Objects.requireNonNull(id, "Id can not be null");
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Transactional
+    public void remove(User entity) {
+        Objects.requireNonNull(entity, "You have pass nullable object");
+        repository.delete(entity);
+    }
+
+    @Transactional
+    public void removeAll() {
+        repository.deleteAll();
+    }
+
+
+    @Transactional(readOnly = true)
+    public Page<User> getAllUsersInProject(Integer projectId, Role role, Pageable pageable) {
+        Objects.requireNonNull(projectId, "Project id can not be null");
+        Objects.requireNonNull(pageable, "Pageable object can not be null");
+
+        Page<User> users = repository.findAll(UserSpec.getAllUsersInProject(projectId, role), pageable);
+
+        if (users.hasContent())
+            return users;
+        else
+            return Page.empty();
+    }
+
+    public Page<User> getAllUserRelatedWithTask(Integer taskId, Affiliation affiliation, Pageable pageable) {
+        Objects.requireNonNull(taskId, "Task id can not be null");
+        Objects.requireNonNull(affiliation, "Pageable object can not be null");
+
+        Page<User> users = repository.findAll(UserSpec.getAllUsersRelateWithTask(taskId, affiliation), pageable);
+
+        if (users.hasContent())
+            return users;
+        else
+            return Page.empty();
+    }
+
+    @Transactional
+    public void changePassword(final User user, final String newPassword) {
+        Objects.requireNonNull(user, "User is  null");
+        Objects.requireNonNull(newPassword, "New password can not be null");
+        user.setPassword(newPassword);
+        repository.save(user);
+    }
+
+    public boolean checkIfValidNewPassword(final String newPassword, final String confirmPassword) {
+        Objects.requireNonNull(newPassword, "New password is null");
+        Objects.requireNonNull(confirmPassword, "New password confirmation is null");
+        return newPassword.equals(confirmPassword);
+    }
+
+    public boolean checkIfValidOldPassword(final User user, final String confirmPassword) {
+        Objects.requireNonNull(user, "User object is null");
+        Objects.requireNonNull(confirmPassword, "New password confirmation is null");
+
+        return (Objects.equals(CipheringService.decrypt(user.getPassword()), confirmPassword));
+
     }
 }
-
-//@Service
-//public class UserService  implements ICommonService<User> {
-//
-//    private final UserRepo userRepo;
-//
-//    @Autowired
-//    public UserService(final UserRepo userRepo) {
-//        this.userRepo = userRepo;
-//    }
-//
-//    @Override
-//    public User saveOrUpdate(User entity) {
-//        return userRepo.save(entity);
-//    }
-//
-//    @Override
-//    public List<User> getAll() {
-//        return userRepo.findAll();
-//    }
-//
-//    @Override
-//    public User get(Integer id) {
-//        return userRepo.getOne(id);
-//    }
-//
-//    @Override
-//    public void remove(User entity) {
-//        userRepo.delete(entity);
-//    }
-//
-//    @Transactional
-//    public boolean changePassword(final User user, final String newPassword) {
-//        user.setPassword(newPassword);
-//        return true;
-//    }
-//
-//    public boolean checkIfValidNewPassword(final String newPassword, final String confirmPassword) {
-//        return newPassword.equals(confirmPassword);
-//    }
-//
-//    public boolean checkIfValidOldPassword(final User user, final String confirmPassword) {
-//
-//        return (Objects.equals(CipheringService.decrypt(user.getPassword()), confirmPassword));
-//
-//    }
-//
-//    public String getUser(final User userFromDB) {
-//        return userFromDB.getName() +
-//                userFromDB.getEmail();
-//    }
-//
-//    public User getUserByEmail(String email) {
-//        return null;
-//    }
-//
-//    public User getUserByName(String name) {
-//        //return userRepo.getUserByName(name);
-//        return new User();
-//    }
-//
-//    public List<User> getParticipantsInProject(Integer projectId) {
-//        return null;
-//    }
-//
-//    public List<User> getParticipantsInProjectAndTheirTasks(Integer projectId) {
-//        return null;
-//    }
-//
-//    public User getAllUsersTasksInProject(Integer userId, Integer projectId) {
-//        return null;
-//    }
-//
-//    public void addProject(User user, Project project){
-//        List<Project> list = user.getProjects();
-//        list.add(project);
-//        user.setProjects(list);
-//    }
-//
-//    }
 

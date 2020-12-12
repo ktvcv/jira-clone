@@ -30,6 +30,12 @@ public class UsersInProjects {
     @Column(name = "role")
     private Role role;
 
+    public UsersInProjects(Project project, User user, Role role) {
+        this.project = project;
+        this.user = user;
+        this.role = role;
+    }
+
     public UserProjectKey getId() {
         return id;
     }

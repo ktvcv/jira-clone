@@ -38,17 +38,17 @@ public class UserServiceTest {
         project1.setTitle("title1");
 
         user1.addProject(project1);
-//
-//        project1.setUser(user1);
-//        userService.saveOrUpdate(user1);
+
+        project1.setUser(user1);
+       // userService.save(user1);
 //        userService.saveOrUpdate(user2);
     }
 
-//    @AfterEach
-//    void tearDown() {
+    @AfterEach
+    void tearDown() {
 //        userService.removeAll();
-//    }
-//
+    }
+
 //    @Test
 //    public void testUserCRUDMethods() {
 //        assertEquals(2, userService.getAll().size());

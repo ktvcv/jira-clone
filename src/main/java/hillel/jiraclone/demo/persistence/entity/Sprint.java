@@ -33,6 +33,17 @@ public class Sprint extends CommonEntity {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Task> tasks = new ArrayList<>();
 
+    public void addTask(Task task){
+        getTasks().add(task);
+        task.setSprint(this);
+    }
+
+    public Task removeTask(Task task){
+        getTasks().remove(task);
+        task.setSprint(null);
+        return task;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

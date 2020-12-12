@@ -122,6 +122,8 @@
                                     <version>5.4.22.Final</version>
                                 </path>
                             </annotationProcessorPaths>
+                            <source>10</source>
+                            <target>10</target>
                         </configuration>
                     </plugin>
                 </plugins>

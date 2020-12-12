@@ -1,6 +1,6 @@
 package hillel.jiraclone.demo.persistence.enumeration;
 
-public enum TaskType {
+public enum TaskType implements TaskFilter {
     FEATURE,
     BUG
 }
